@@ -1,0 +1,28 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.startupEditor": "none",
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "git.autofetch": true,
+    "editor.minimap.enabled": false,
+    "git.openRepositoryInParentFolders": "never",
+    "editor.mouseWheelZoom": true,
+    "security.workspace.trust.banner": "always",
+    "window.restoreWindows": "none",
+    "git.confirmSync": false,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false,
+        "yaml": true
+    },
+    "extensions.ignoreRecommendations": true,
+    "workbench.editor.enablePreview": false,
+    "editor.largeFileOptimizations": false,
+    "remote.localPortHost": "allInterfaces",
+    "redhat.telemetry.enabled": true
+}
