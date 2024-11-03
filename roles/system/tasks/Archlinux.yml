@@ -10,6 +10,5 @@
   community.general.pacman:
     name:
       - jq
-      - open-iscsi
     state: present
   become: true

@@ -1,8 +1,8 @@
 default_roles:
   - system
   # - 1password
-  - aldente
-  - asciiquarium
+  # - aldente
+  # - asciiquarium
   - bash
   - bat
   - btop
@@ -13,11 +13,11 @@ default_roles:
   - fzf
   - gh
   - git
-  - go
-  - hammerspoon
-  - helm
-  - k8s
-  - k9s
+  # - go
+  # - hammerspoon
+  # - helm
+  # - k8s
+  # - k9s
   - kitty
   - lazygit
   - lsd
@@ -33,60 +33,33 @@ default_roles:
   - podman
   - pwsh
   - python
-  - raycast
+  # - raycast
   # - ruby
   # - rust
   - slides
-  - spotify
-  - ssh
+  # - spotify
   - sshfs
   - starship
-  - taskfile
-  - terraform
-  - terragrunt
+  # - taskfile
+  # - terraform
+  # - terragrunt
   - tldr
-  - tmate
+  # - tmate
   - tmux
   # - tshark
-  - warp
-  - whalebrew
+  # - warp
+  # - whalebrew
   # - zellij
-  - zoxide
-  - zsh
+  # - zoxide
 
-git_user_name: "TechDufus"
+git_user_name: "cconrad"
 op:
   git:
     user:
-      email: "op://Personal/TechDufus GitHub/email"
-    allowed_signers: "op://Personal/TechDufus SSH/allowed_signers"
-  ssh:
-    github:
-      techdufus:
-        - name: id_ed25519
-          vault_path: "op://Personal/TechDufus SSH"
-        - name: raft-infra
-          vault_path: "op://Raft/Raft-SSH"
+      email: ""op://Private/bpjobaxendyrw43ekbrioiqfny/email""
+
 # FIXME: See `system/tasks/main.yml` for how to structure this var looping.
   # system:
   #   hosts:
   #     - item: op://Raft/rdp-demo-local-ingress/notesPlain
   #       account: my.1password.com
-
-k8s:
-  repo:
-    version: "v1.26"
-
-helm:
-  repos:
-    - name: traefik
-      url: https://helm.traefik.io/traefik
-
-go:
-  packages:
-    - package: github.com/go-task/task/v3/cmd/task@latest
-      cmd: task
-    - package: github.com/gcla/termshark/v2/cmd/termshark@v2.4.0
-      cmd: termshark
-    # - package: github.com/stillmatic/chat@latest
-    #   cmd: chat
