@@ -56,7 +56,7 @@ git_user_name: "cconrad"
 op:
   git:
     user:
-      email: ""op://Private/bpjobaxendyrw43ekbrioiqfny/email""
+      email: "op://Private/bpjobaxendyrw43ekbrioiqfny/email"
 
 # FIXME: See `system/tasks/main.yml` for how to structure this var looping.
   # system:
