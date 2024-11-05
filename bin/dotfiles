@@ -120,6 +120,19 @@ function ubuntu_setup() {
   fi
 }
 
+function fedora_setup() {
+  if ! rpm -q ansible >/dev/null 2>&1; then
+    __task "Installing Ansible"
+    _cmd "sudo dnf update"
+    _cmd "sudo dnf install -y ansible"
+  fi
+  if ! rpm -q git >/dev/null 2>&1; then
+    __task "Installing Git"
+    _cmd "sudo dnf update"
+    _cmd "sudo dnf install -y git"
+  fi
+}
+
 function arch_setup() {
   if ! [ -x "$(command -v ansible)" ]; then
     __task "Installing Ansible"
@@ -212,6 +225,9 @@ case $ID in
     ;;
   Darwin)
     macos_setup
+    ;;
+  fedora)
+    fedora_setup
     ;;
   *)
     __task "Unsupported OS"
