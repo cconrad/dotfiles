@@ -1,0 +1,7 @@
+---
+- name: "LibreOffice | {{ ansible_distribution }} | Install LibreOffice"
+  ansible.builtin.dnf:
+    name:
+      - libreoffice
+    state: present
+  become: true
