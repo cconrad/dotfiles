@@ -19,9 +19,10 @@
 
 - name: "{{ role_name }} | Copy config"
   ansible.builtin.copy:
-    src: btop.conf
     dest: ~/.config/btop/btop.conf
-    mode: "0644"
+    force: false
+    mode: "644"
+    src: btop.conf
 
 - name: "{{ role_name }} | Create bash alias"
   ansible.builtin.blockinfile:
