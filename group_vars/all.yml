@@ -4,15 +4,15 @@ default_roles:
   # - aldente
   # - asciiquarium
   # - bash
-  - bat
-  - btop
+  # - bat
+  # - btop
   # - discord
   # - docker
   # - flatpak
   - fonts
-  - fzf
-  - gh
-  - git
+  # - fzf
+  # - gh
+  # - git
   # - go
   # - hammerspoon
   # - helm
@@ -20,10 +20,10 @@ default_roles:
   # - k9s
   # - kitty
   # - lazygit
-  - lsd
+  # - lsd
   # - lua
   # - nala
-  - ncdu
+  # - ncdu
   # - neofetch
   # - neovim
   # - nerdfetch
@@ -39,13 +39,13 @@ default_roles:
   # - slides
   # - spotify
   # - sshfs
-  - starship
+  # - starship
   # - taskfile
   # - terraform
   # - terragrunt
-  - tldr
+  # - tldr
   # - tmate
-  - tmux
+  # - tmux
   # - tshark
   # - warp
   # - whalebrew
