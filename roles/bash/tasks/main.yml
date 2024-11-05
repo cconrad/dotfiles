@@ -1,23 +1,23 @@
 ---
-- name: "Bash | Copy .bashrc"
-  ansible.builtin.copy:
-    src: ".bashrc"
-    dest: "{{ ansible_user_dir }}/.bashrc"
-    mode: "0644"
+# - name: "{{ role_name }} | Copy .bashrc"
+#   ansible.builtin.copy:
+#     src: ".bashrc"
+#     dest: "{{ ansible_user_dir }}/.bashrc"
+#     mode: "0644"
 
-- name: "Bash | Copy .profile"
-  ansible.builtin.copy:
-    src: ".profile"
-    dest: "{{ ansible_user_dir }}/.profile"
-    mode: "0644"
+# - name: "Bash | Copy .profile"
+#   ansible.builtin.copy:
+#     src: ".profile"
+#     dest: "{{ ansible_user_dir }}/.profile"
+#     mode: "0644"
 
-- name: "Bash | Copy custom bash config"
-  ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/"
-    src: "bash"
-    mode: "0644"
-    directory_mode: "0755"
-    force: true
+# - name: "Bash | Copy custom bash config"
+#   ansible.builtin.copy:
+#     dest: "{{ ansible_user_dir }}/.config/"
+#     src: "bash"
+#     mode: "0644"
+#     directory_mode: "0755"
+#     force: true
 
 - name: "Bash | {{ ansible_distribution }} | Identify distribution config"
   ansible.builtin.stat:
@@ -30,16 +30,16 @@
   register: bash_os_family_config
   when: not bash_os_distribution_config.stat.exists
 
-- name: "Bash | Calculate os config src"
-  ansible.builtin.set_fact:
-    bash_os_config: "{{ bash_os_distribution_config if bash_os_distribution_config.stat.exists else bash_os_family_config }}"
+# - name: "Bash | Calculate os config src"
+#   ansible.builtin.set_fact:
+#     bash_os_config: "{{ bash_os_distribution_config if bash_os_distribution_config.stat.exists else bash_os_family_config }}"
 
-- name: "Bash | Copy custom bash config for os: {{ bash_os_config.stat.path | basename }}"
-  ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/bash/"
-    src: "{{ bash_os_config.stat.path }}/"
-    mode: "0644"
-    force: true
-  when:
-    - bash_os_config is defined
-    - bash_os_config.stat.exists
+# - name: "Bash | Copy custom bash config for os: {{ bash_os_config.stat.path | basename }}"
+#   ansible.builtin.copy:
+#     dest: "{{ ansible_user_dir }}/.config/bash/"
+#     src: "{{ bash_os_config.stat.path }}/"
+#     mode: "0644"
+#     force: true
+#   when:
+#     - bash_os_config is defined
+#     - bash_os_config.stat.exists

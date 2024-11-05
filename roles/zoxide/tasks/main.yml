@@ -13,8 +13,10 @@
     append_newline: true
     block: |
       eval "$(zoxide init bash --cmd cd)"
+    create: true
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (zoxide.alias)"
+    mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"

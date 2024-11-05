@@ -13,8 +13,10 @@
     append_newline: true
     block: |
       alias cat='bat'
+    create: true
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (bat.alias)"
+    mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"

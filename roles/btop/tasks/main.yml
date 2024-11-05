@@ -28,8 +28,10 @@
     append_newline: true
     block: |
       alias top='btop'
+    create: true
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (btop.alias)"
+    mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"
