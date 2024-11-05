@@ -19,3 +19,14 @@
     dest: "{{ ansible_user_dir }}/.config/starship.toml"
     src: "starship.toml"
     mode: "0644"
+
+- name: "{{ role_name }} | Enable in bash"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      eval "$(starship init bash)"
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (starship)"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
