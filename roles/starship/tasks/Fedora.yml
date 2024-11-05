@@ -2,18 +2,20 @@
 - name: "{{ role_name }} | {{ ansible_distribution }} | Check installation status"
   ansible.builtin.command:
     cmd: "command -v starship"
-  register: starship_exists
+  changed_when: false
   ignore_errors: true
+  register: starship_exists
   failed_when: false
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Ensure target directory exists"
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/bin"
-    state: directory
-    mode: "0755"
-  when: starship_exists.rc != 0
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install starship"
+  block:
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Ensure target directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/bin"
+        state: directory
+        mode: "0755"
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
-  ansible.builtin.shell:
-    cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_user_dir }}/.local/bin"
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+      ansible.builtin.shell:
+        cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_user_dir }}/.local/bin"
   when: starship_exists.rc != 0
