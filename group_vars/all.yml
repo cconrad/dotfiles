@@ -22,7 +22,7 @@ default_roles:
   - lsd
   # - lua
   # - nala
-  # - ncdu
+  - ncdu
   # - neofetch
   # - neovim
   # - nerdfetch

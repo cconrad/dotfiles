@@ -1,0 +1,6 @@
+---
+- name: "NCDU | {{ansible_distribution }} | Install ncdu"
+  ansible.builtin.dnf:
+    name: ncdu
+    state: latest
+  become: true
