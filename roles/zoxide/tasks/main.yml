@@ -7,3 +7,16 @@
 - name: "Zoxide | Run Tasks: {{ ansible_distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: zoxide_distribution_config.stat.exists
+
+- name: "Zoxide | Create bash alias"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      eval "$(zoxide init bash)"
+      alias cd='z'
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (zoxide.alias)"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: true
+  # TODO Change to "bash" if this works
+  when: "'zoxide' in default_roles"
