@@ -1,7 +1,41 @@
 ---
-- name: "Fonts | {{ ansible_distribution }} | Install"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install powerline-fonts"
   ansible.builtin.dnf:
     name:
       - powerline-fonts
     state: present
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Create temporary directory for download of Nerd fonts"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/temp"
+    state: directory
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Create font directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/fonts"
+    state: directory
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install extraction tool"
+  ansible.builtin.dnf:
+    name:
+      - unzip
+    state: present
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Extract Jetbrains Mono Nerd font"
+  ansible.builtin.unarchive:
+    decrypt: false
+    dest: "{{ ansible_user_dir }}/.local/share/fonts"
+    include:
+      - "*.otf"
+      - "*.ttf"
+    keep_newer: true
+    mode: "444"
+    remote_src: true
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Update font cache"
+  ansible.builtin.command:
+    cmd: fc-cache -fv
   become: true
