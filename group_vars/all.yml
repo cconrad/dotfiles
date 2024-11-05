@@ -1,14 +1,14 @@
 default_roles:
-  - system
+  # - system
   # - 1password
   # - aldente
   # - asciiquarium
-  - bash
+  # - bash
   - bat
   - btop
-  - discord
-  - docker
-  - flatpak
+  # - discord
+  # - docker
+  # - flatpak
   - fonts
   - fzf
   - gh
@@ -18,27 +18,27 @@ default_roles:
   # - helm
   # - k8s
   # - k9s
-  - kitty
-  - lazygit
+  # - kitty
+  # - lazygit
   - lsd
-  - lua
-  - nala
+  # - lua
+  # - nala
   - ncdu
-  - neofetch
-  - neovim
-  - nerdfetch
-  - npm
-  - nvm
-  - obsidian
-  - podman
-  - pwsh
-  - python
+  # - neofetch
+  # - neovim
+  # - nerdfetch
+  # - npm
+  # - nvm
+  # - obsidian
+  # - podman
+  # - pwsh
+  # - python
   # - raycast
   # - ruby
   # - rust
-  - slides
+  # - slides
   # - spotify
-  - sshfs
+  # - sshfs
   - starship
   # - taskfile
   # - terraform
@@ -50,7 +50,7 @@ default_roles:
   # - warp
   # - whalebrew
   # - zellij
-  # - zoxide
+  - zoxide
 
 git_user_name: "cconrad"
 op:
