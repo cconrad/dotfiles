@@ -123,12 +123,10 @@ function ubuntu_setup() {
 function fedora_setup() {
   if ! rpm -q ansible >/dev/null 2>&1; then
     __task "Installing Ansible"
-    _cmd "sudo dnf update"
     _cmd "sudo dnf install -y ansible"
   fi
   if ! rpm -q git >/dev/null 2>&1; then
     __task "Installing Git"
-    _cmd "sudo dnf update"
     _cmd "sudo dnf install -y git"
   fi
 }
