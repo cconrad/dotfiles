@@ -27,7 +27,7 @@
       eval "$(starship init bash)"
     create: true
     insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (starship)"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (starship.init)"
     mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true

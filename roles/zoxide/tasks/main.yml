@@ -15,7 +15,7 @@
       eval "$(zoxide init bash --cmd cd)"
     create: true
     insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (zoxide.alias)"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (zoxide.init)"
     mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
