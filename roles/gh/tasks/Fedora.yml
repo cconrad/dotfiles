@@ -8,7 +8,7 @@
 - name: "GitHub CLI | {{ ansible_distribution }} | Add GitHub CLI repository"
   ansible.builtin.yum_repository:
     baseurl: https://cli.github.com/packages/rpm/
-    description: GitHub CLI repository
+    description: GitHub CLI
     enabled: yes
     gpgcheck: no
     name: gh-cli
@@ -20,3 +20,6 @@
     enablerepo: gh-cli
     state: present
   become: true
+
+# TODO If we have a PAT, we could set GH_TOKEN and call `gh extension install copilot` here.
+# TODO If gh copilot was installed, we could add `eval "$(gh copilot alias -- bash)"  to the bashrc.
