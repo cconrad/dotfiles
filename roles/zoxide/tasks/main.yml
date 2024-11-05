@@ -12,11 +12,9 @@
   ansible.builtin.blockinfile:
     append_newline: true
     block: |
-      eval "$(zoxide init bash)"
-      alias cd='z'
+      eval "$(zoxide init bash --cmd cd)"
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (zoxide.alias)"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
-  # TODO Change to "bash" if this works
-  when: "'zoxide' in default_roles"
+  when: "'bash' in default_roles"
