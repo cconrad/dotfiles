@@ -6,28 +6,32 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Create temporary directory for download of Nerd fonts"
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/temp"
-    state: directory
+- name: "{{ role_name }} | {{ ansible_distribution }} | Check installation status for JetBrains Mono Nerd font"
+  ansible.builtin.shell:
+    cmd: fc-list | grep -i "JetBrainsMonoNerd"
+  failed_when: false
+  register: jetbrainsmononerd_installed
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Create font directory"
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/share/fonts"
-    state: directory
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install JetBrains Mono Nerd font"
+  ansible.builtin.block:
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Create font directory"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/share/fonts"
+        state: directory
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Extract Jetbrains Mono Nerd font"
-  ansible.builtin.unarchive:
-    decrypt: false
-    dest: "{{ ansible_user_dir }}/.local/share/fonts"
-    include:
-      - "*.ttf"
-    keep_newer: true
-    mode: "444"
-    remote_src: true
-    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Extract Jetbrains Mono Nerd font"
+      ansible.builtin.unarchive:
+        decrypt: false
+        dest: "{{ ansible_user_dir }}/.local/share/fonts"
+        include:
+          - "*.ttf"
+        keep_newer: true
+        mode: "444"
+        remote_src: true
+        src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Update font cache"
-  ansible.builtin.command:
-    cmd: fc-cache -fv
-  become: true
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Update font cache"
+      ansible.builtin.command:
+        cmd: fc-cache -fv
+      become: true
+  when: jetbrainsmononerd_installed.rc != 0
