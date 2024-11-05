@@ -7,14 +7,16 @@
 
 - name: "GitHub CLI | {{ ansible_distribution }} | Add GitHub CLI repository"
   ansible.builtin.yum_repository:
-    name: gh-cli
-    description: GitHub CLI repository
     baseurl: https://cli.github.com/packages/rpm/
-    gpgcheck: no
+    description: GitHub CLI repository
     enabled: yes
+    gpgcheck: no
+    name: gh-cli
+  become: true
 
 - name: "GitHub CLI | {{ ansible_distribution }} | Install gh"
   ansible.builtin.dnf:
     name: gh
     enablerepo: gh-cli
     state: present
+  become: true
