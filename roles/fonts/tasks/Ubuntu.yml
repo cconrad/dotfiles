@@ -1,5 +1,5 @@
 ---
-- name: "Fonts | Install"
+- name: "Fonts | Ubuntu | Install"
   ansible.builtin.apt:
     name:
       - fonts-powerline
