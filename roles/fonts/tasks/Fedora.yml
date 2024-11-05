@@ -16,19 +16,11 @@
     path: "{{ ansible_user_dir }}/.local/share/fonts"
     state: directory
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install extraction tool"
-  ansible.builtin.dnf:
-    name:
-      - unzip
-    state: present
-  become: true
-
 - name: "{{ role_name }} | {{ ansible_distribution }} | Extract Jetbrains Mono Nerd font"
   ansible.builtin.unarchive:
     decrypt: false
     dest: "{{ ansible_user_dir }}/.local/share/fonts"
     include:
-      - "*.otf"
       - "*.ttf"
     keep_newer: true
     mode: "444"
