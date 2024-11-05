@@ -1,0 +1,6 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: python3-ansible-lint
+    state: present
+  become: true
