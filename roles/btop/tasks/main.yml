@@ -22,3 +22,14 @@
     src: btop.conf
     dest: ~/.config/btop/btop.conf
     mode: "0644"
+
+- name: "{{ role_name }} | Create bash alias"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias top='btop'
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (btop.alias)"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
