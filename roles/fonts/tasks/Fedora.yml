@@ -8,13 +8,13 @@
 
 - name: "{{ role_name }} | {{ ansible_distribution }} | Check installation status for JetBrains Mono Nerd font"
   ansible.builtin.shell:
-    cmd: "fc-list | grep -i JetBrainsMonoNerd"
+    cmd: fc-list | grep -i JetBrainsMonoNerd
   changed_when: false
   failed_when: false
   register: jetbrainsmononerd_installed
 
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install JetBrains Mono Nerd font"
-  ansible.builtin.block:
+  block:
     - name: "{{ role_name }} | {{ ansible_distribution }} | Create font directory"
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/.local/share/fonts"
