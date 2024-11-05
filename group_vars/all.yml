@@ -4,7 +4,7 @@ default_roles:
   # - asciiquarium
   # - bash
   - bat
-  # - btop
+  - btop
   # - discord
   # - docker
   # - flatpak
