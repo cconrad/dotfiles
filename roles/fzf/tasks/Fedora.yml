@@ -1,0 +1,5 @@
+---
+- name: "FZF | {{ ansible_distribution}} | Install fzf"
+  ansible.builtin.dnf:
+    name: fzf
+    state: present

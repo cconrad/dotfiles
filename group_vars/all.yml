@@ -9,7 +9,7 @@ default_roles:
   # - docker
   # - flatpak
   - fonts
-  # - fzf
+  - fzf
   # - gh
   # - git
   # - go
