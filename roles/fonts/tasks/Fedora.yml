@@ -8,7 +8,7 @@
 
 - name: "{{ role_name }} | {{ ansible_distribution }} | Check installation status for JetBrains Mono Nerd font"
   ansible.builtin.shell:
-    cmd: fc-list | grep -i JetBrainsMonoNerd
+    cmd: "fc-list | grep -i JetBrainsMonoNerd"
   changed_when: false
   failed_when: false
   register: jetbrainsmononerd_installed
