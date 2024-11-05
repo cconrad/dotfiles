@@ -1,0 +1,10 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Ensure target directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.shell:
+    cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_user_dir }}/.local/bin"
