@@ -1,0 +1,6 @@
+---
+- name: "LSD | {{ ansible_distribution }} | Install lsd"
+  ansible.builtin.dnf:
+    name: lsd
+    state: present
+  become: true
