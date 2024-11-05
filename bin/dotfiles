@@ -243,7 +243,6 @@ esac
 if ! [[ -d "$DOTFILES_DIR" ]]; then
   __task "Cloning repository"
   _cmd "git clone --quiet https://github.com/cconrad/dotfiles.git $DOTFILES_DIR"
-  _cmd "git -C $DOTFILES_DIR switch 20241103_make-it-my-own"
 else
   __task "Updating repository"
   _cmd "git -C $DOTFILES_DIR pull --quiet"
