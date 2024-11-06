@@ -8,6 +8,18 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
+- name: "{{ role_name }} | Create configuration directory"
+  ansible.builtin.file:
+    mode: "755"
+    path: "{{ ansible_user_dir }}/.config/bat"
+    state: directory
+
+- name: "{{ role_name }} | Configure bat"
+  ansible.builtin.copy:
+    dest: "{{ ansible_user_dir }}/.config/bat/config"
+    mode: "644"
+    src: config
+
 - name: "{{ role_name }} | Create bash alias"
   ansible.builtin.blockinfile:
     append_newline: true
