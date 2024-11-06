@@ -2,6 +2,8 @@
 
 This repo is heavily influenced by [TechDufus](https://github.com/TechDufus/dotfiles)'s repo. Go check it out!
 
+**IMPORTANT:** Do not install this without studying the code. The repo is primarily for my own use and secondarily to share bits that may be useful to others.
+
 ## Goals
 
 Provide fully automated multiple-OS development environment that is easy to set up and maintain.
@@ -63,15 +65,6 @@ brew update && brew upgrade
 
 The `all.yml` file allows you to personalize your setup to your needs. This file will be created in the file located at `~/.dotfiles/group_vars/all.yml` after you [Install this dotfiles](#install) and include your desired settings.
 
-Below is a list of all available values. Not all are required but incorrect values will break the playbook if not properly set.
-
-| Name             | Type                                   | Required |
-| ---------------- | -------------------------------------- | -------- |
-| git_user_name    | string                                 | yes      |
-| op               | object `(see OP Variable below)`       | yes      |
-| go.packages      | list `(for extra go bin installs)`     | no       |
-| helm.repos       | list `(add extra helm repos)`          | no       |
-| k8s.repo.version | string `(specify kubectl bin version)` | no       |
 ### 1Password Integration
 
 This project depends on a 1Password vault. This means you must have installed and authenticated `op` for CLI access to your vault. This can be done by installing the 1Password desktop application **OR** can be setup with the `op` CLI only, but it is a bit more annoying that way since the CLI tool can directly integrate with the Desktop application.
@@ -88,16 +81,20 @@ This playbook includes a custom shell script located at `bin/dotfiles`. This scr
 
 This shell script is also used to initialize your environment after bootstrapping your `supported-OS` and performing a full system upgrade as mentioned above.
 
-> [!NOTE]
-> You must follow required steps before running this command or things may become unusable until fixed.
+1. Install the OS
+1. Log in as a regular user with sudo privileges
+1. Update all packages
+1. Install curl
+1. Run:
+	```shell
+	curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles | bash -s -- --ask-become-pass
+	```
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles | bash -s -- --ask-become-pass
-```
 If you want to run only a specific role, you can specify the following bash command:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
 ```
+
 ### Update
 
 This repository is continuously updated with new features and settings which become available to you when updating.
