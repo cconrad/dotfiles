@@ -8,108 +8,144 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "Git | Set diff.colorMoved"
-  community.general.git_config:
-    name: diff.colorMoved
-    scope: global
-    value: zebra
-
-- name: "Git | Set fetch.prune"
-  community.general.git_config:
-    name: fetch.prune
-    scope: global
-    value: true
-
-# git config --global --add url."git@github.com:".insteadOf "https://github.com/"
-# - name: "Git | Set URL to SSH"
-#   community.general.git_config:
-#     name: URL
-#     scope: global
-#     value: "git@github.com"
-
-- name: "Git | Set init.defaultBranch"
+- name: "{{ role_name }} | Set init.defaultBranch"
   community.general.git_config:
     name: init.defaultBranch
     scope: global
     value: main
 
-- name: "Git | Set pull.rebase"
+- name: "{{ role_name }} | Set core.autocrlf"
   community.general.git_config:
-    name: pull.rebase
+    name: core.autocrlf
     scope: global
-    value: true
+    value: "false"
 
-- name: "Git | Set rebase.autoStash"
-  community.general.git_config:
-    name: rebase.autoStash
-    scope: global
-    value: true
-
-- name: "Git | Read user.email secret from 1Password"
-  when: op_installed
-  block:
-    - name: "1Password | Get user.email"
-      ansible.builtin.command: "op --account my.1password.com read '{{ op.git.user.email }}'"
-      register: op_git_user_email
-      changed_when: false
-      # no_log: true
-
-    - name: "1Password | Set git_user_email"
-      ansible.builtin.set_fact:
-        git_user_email: "{{ op_git_user_email.stdout }}"
-      no_log: true
-
-- name: "Git | Set user.email"
-  community.general.git_config:
-    name: user.email
-    scope: global
-    value: "{{ git_user_email }}"
-  no_log: true
-
-- name: "Git | Set user.name"
-  community.general.git_config:
-    name: user.name
-    scope: global
-    value: "{{ git_user_name }}"
-
-- name: "Git | Set user.signingkey"
-  community.general.git_config:
-    name: user.signingkey
-    scope: global
-    value: "{{ ansible_user_dir }}/.ssh/id_ed25519.pub"
-
-- name: "Git | Set gpg.format"
+- name: "{{ role_name }} | Set gpg.format"
   community.general.git_config:
     name: gpg.format
     scope: global
     value: ssh
 
-- name: "Git | Set commit.gpgsign"
-  community.general.git_config:
-    name: commit.gpgsign
-    scope: global
-    value: true
+- name: "{{ role_name }} | Name and email from 1Password"
+  when: op_installed
+  block:
+    - name: "{{ role_name }} | Get user.email"
+      ansible.builtin.command:
+        argv:
+          - op
+          - --account
+          - my.1password.com
+          - read
+          - op://Private/{{ ansible_facts.nodename }}/ansible/git.user.email
+      register: op_git_user_email
+      failed_when: false
+      changed_when: false
 
-- name: "Git | Set tag.gpgsign"
-  community.general.git_config:
-    name: tag.gpgsign
-    scope: global
-    value: true
+    - name: "{{ role_name }} | Get user.name"
+      ansible.builtin.command:
+        argv:
+          - op
+          - --account
+          - my.1password.com
+          - read
+          - op://Private/{{ ansible_facts.nodename }}/ansible/git.user.name
+      register: op_git_user_name
+      failed_when: false
+      changed_when: false
 
-- name: "Git | Set undo alias"
-  community.general.git_config:
-    name: alias.undo
-    scope: global
-    value: "reset HEAD~1 --mixed"
+    - name: "{{ role_name }} | Set user.email"
+      community.general.git_config:
+        name: user.email
+        scope: global
+        value: "{{ op_git_user_email.stdout }}"
+      when: op_git_user_email.rc == 0
 
-- name: "Git | Copy global.commit.template"
-  ansible.builtin.copy:
-    src: global.commit.template
-    dest: "{{ ansible_user_dir }}/.config/git/commit_template"
-    mode: "0644"
+    - name: "{{ role_name }} | Set user.name"
+      community.general.git_config:
+        name: user.name
+        scope: global
+        value: "{{ op_git_user_name.stdout }}"
+      when: op_git_user_name.rc == 0
+    
+    - name: "{{ role_name }} | Ensure environment.d directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.config/environment.d"
+        state: directory
+        mode: "755"
+      when: op_git_user_name.rc == 0 or op_git_user_email.rc == 0
+    
+    - name: "{{ role_name }} | Set GIT_AUTHOR_NAME"
+      ansible.builtin.lineinfile:
+        create: true
+        line: 'GIT_AUTHOR_NAME="{{ op_git_user_name.stdout }}"'
+        mode: "644"
+        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        regexp: "GIT_AUTHOR_NAME="
+        state: present
+      when: op_git_user_name.rc == 0
+      
+    - name: "{{ role_name }} | Set GIT_COMMITTER_NAME"
+      ansible.builtin.lineinfile:
+        create: true
+        line: 'GIT_COMMITTER_NAME="{{ op_git_user_name.stdout }}"'
+        mode: "644"
+        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        regexp: "GIT_COMMITTER_NAME="
+        state: present
+      when: op_git_user_name.rc == 0
 
-- name: "Git | Set commit.template"
-  community.general.git_config:
-    name: commit.template
-    scope: global
-    value: "{{ ansible_user_dir }}/.config/git/commit_template"
+    - name: "{{ role_name }} | Set GIT_AUTHOR_EMAIL"
+      ansible.builtin.lineinfile:
+        create: true
+        line: 'GIT_AUTHOR_EMAIL="{{ op_git_user_email.stdout }}"'
+        mode: "644"
+        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        regexp: "GIT_AUTHOR_EMAIL="
+        state: present
+      when: op_git_user_email.rc == 0
+
+    - name: "{{ role_name }} | Set GIT_COMMITTER_EMAIL"
+      ansible.builtin.lineinfile:
+        create: true
+        line: 'GIT_COMMITTER_EMAIL="{{ op_git_user_email.stdout }}"'
+        mode: "644"
+        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        regexp: "GIT_COMMITTER_EMAIL="
+        state: present
+      when: op_git_user_email.rc == 0
+
+# - name: "Git | Set user.signingkey"
+#   community.general.git_config:
+#     name: user.signingkey
+#     scope: global
+#     value: "{{ ansible_user_dir }}/.ssh/id_ed25519.pub"
+
+# - name: "Git | Set commit.gpgsign"
+#   community.general.git_config:
+#     name: commit.gpgsign
+#     scope: global
+#     value: true
+
+# - name: "Git | Set tag.gpgsign"
+#   community.general.git_config:
+#     name: tag.gpgsign
+#     scope: global
+#     value: true
+
+# - name: "Git | Set undo alias"
+#   community.general.git_config:
+#     name: alias.undo
+#     scope: global
+#     value: "reset HEAD~1 --mixed"
+
+# - name: "Git | Copy global.commit.template"
+#   ansible.builtin.copy:
+#     src: global.commit.template
+#     dest: "{{ ansible_user_dir }}/.config/git/commit_template"
+#     mode: "0644"
+
+# - name: "Git | Set commit.template"
+#   community.general.git_config:
+#     name: commit.template
+#     scope: global
+#     value: "{{ ansible_user_dir }}/.config/git/commit_template"

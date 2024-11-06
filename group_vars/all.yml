@@ -2,7 +2,6 @@ default_roles:
   # - system
   - 1password
   - ansible-lint
-  # - asciiquarium
   - bash
   - bat
   - btop
@@ -12,7 +11,7 @@ default_roles:
   - fonts
   - fzf
   - gh
-  # - git
+  - git
   # - go
   # - helm
   # - k8s
@@ -52,14 +51,7 @@ default_roles:
   # - zellij
   - zoxide
 
-git_user_name: "cconrad"
 op:
   git:
     user:
-      email: "op://Private/bpjobaxendyrw43ekbrioiqfny/email"
-
-# FIXME: See `system/tasks/main.yml` for how to structure this var looping.
-  # system:
-  #   hosts:
-  #     - item: op://Raft/rdp-demo-local-ingress/notesPlain
-  #       account: my.1password.com
+      email: op://Private/bpjobaxendyrw43ekbrioiqfny/email
