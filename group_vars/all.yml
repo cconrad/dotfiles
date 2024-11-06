@@ -2,6 +2,7 @@ default_roles:
   # - system
   - 1password
   - ansible-lint
+  - asciinema
   - bash
   - bat
   - btop
