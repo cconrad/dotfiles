@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Obsidian ({{ vault.friendly_name }})
+Exec={{ ansible_user_dir}}/.local/bin/{{ obsidian_latest_filename }} obsidian://open?vault={{ vault.name }}
+Terminal=false
+Type=Application
+Icon=obsidian
+StartupWMClass=obsidian
+MimeType=x-scheme-handler/obsidian;
+Categories=Office;

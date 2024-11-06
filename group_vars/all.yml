@@ -29,7 +29,7 @@ default_roles:
   # - nerdfetch
   # - npm
   # - nvm
-  # - obsidian
+  - obsidian
   # - podman
   # - pwsh
   # - python

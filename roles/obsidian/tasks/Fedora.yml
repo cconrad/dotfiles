@@ -1,19 +1,99 @@
 ---
-- name: "{{ role_name }} | Get currently installed filename"
-  ansible.builtin.shell: "ls -r ~/.local/bin/Obsidian-*.AppImageX | head -n 1 | xargs -n 1 basename"
+- name: "{{ role_name }} | Determine installed filename"
+  ansible.builtin.shell:
+    cmd: |
+      ls -r ~/.local/bin/Obsidian-*.AppImage \
+        | head -n 1 \
+        | xargs -n 1 basename
   register: obsidian_current_filename
   changed_when: false
   failed_when: false
 
-# Now if the file exists, obsidian_current_filename.rc == 0 and obsidian_current_filename.stdout will contain the filename
-# If the file does not exist, obsidian_current_filename.rc > 0
+- name: "{{ role_name }} | Create scalable icon directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/icons/hicolor/scalable/apps"
+    state: directory
+    mode: "700"
 
-# Call `curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | jq -r '.assets[] | select(.browser_download_url | test("\\.AppImage$") and (contains("arm64") | not)) | .browser_download_url'` and check whether the output contains the filename
+- name: "{{ role_name }} | Create bitmap icon directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/icons/hicolor/512x512/apps"
+    state: directory
+    mode: "700"
 
-# If yes, we have the latest version installed
+- name: "{{ role_name }} | Install scalable icon"
+  ansible.builtin.copy:
+    src: obsidian.svg
+    dest: "{{ ansible_user_dir }}/.local/share/icons/hicolor/scalable/apps/obsidian.svg"
+    mode: "600"
 
-# If no:
-  # we should parse the curl output to find the path to the AppImage
-  # download the AppImage
-  # create or update the desktop shortcuts
-  # delete the previous version
+- name: "{{ role_name }} | Install bitmap icon"
+  ansible.builtin.copy:
+    src: obsidian.png
+    dest: "{{ ansible_user_dir }}/.local/share/icons/hicolor/512x512/apps/obsidian.png"
+    mode: "600"
+
+- name: "{{ role_name }} | Determine installation status"
+  ansible.builtin.set_fact:
+    obsidian_current_filename:  "{{ obsidian_current_filename.stdout }}"
+    obsidian_is_installed:  "{{ obsidian_current_filename.rc == 0 }}"
+
+- name: "{{ role_name }} | Get latest version URL"
+  ansible.builtin.shell:
+    cmd: |
+      curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
+        | jq -r '.assets[] | select(.browser_download_url | test("\\.AppImage$") and (contains("arm64") | not)) | .browser_download_url' \
+        | head -n 1
+  register: obsidian_latest_url
+  changed_when: false
+  failed_when: false
+
+- name: "{{ role_name }} | Determine installation requirement"
+  ansible.builtin.set_fact:
+    obsidian_needs_download: |
+      {{
+        (
+          not obsidian_is_installed
+          or
+          not obsidian_current_filename in obsidian_latest_url.stdout
+        )
+        and obsidian_latest_url.rc == 0
+        and obsidian_latest_url.stdout | length > 0
+      }}
+
+- name: "{{ role_name }} | Install"
+  block:
+    - name: "{{ role_name }} | Determine new filename"
+      ansible.builtin.set_fact:
+        obsidian_latest_filename: "{{ obsidian_latest_url.stdout | regex_replace('.*/', '') }}"
+
+    - name: "{{ role_name }} | Download latest version"
+      ansible.builtin.get_url:
+        url: "{{ obsidian_latest_url.stdout }}"
+        dest: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
+
+    - name: "{{ role_name }} | Make executable"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
+        mode: 'u+x'
+
+    - name: "{{ role_name }} | Create desktop shortcut"
+      ansible.builtin.template:
+        src: obsidian.desktop.j2
+        dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian.desktop"
+
+    - name: "{{ role_name }} | Create desktop shortcut for each vault"
+      ansible.builtin.template:
+        src: obsidian-vault.desktop.j2
+        dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian-{{ vault.name }}.desktop"
+      loop: "{{ obsidian_vaults }}"
+      loop_control:
+        loop_var: vault
+      when: obsidian_vaults is defined
+
+    - name: "{{ role_name }} | Remove previous version"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_current_filename }}"
+        state: absent
+      when: obsidian_is_installed
+  when: obsidian_needs_download
