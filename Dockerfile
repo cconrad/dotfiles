@@ -41,17 +41,10 @@ USER ${USER}
 
 COPY --chown=${USER}:${group} bin/dotfiles /home/${USER}/dotfiles
 
-RUN \
-  mkdir -p /home/${USER}/.ansible-vault && \
-  touch /home/${USER}/.ansible-vault/vault.secret && \
-  echo '$vault_secret' > /home/${USER}/.ansible-vault/vault.secret
-
 # RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles)"
 RUN git clone --quiet https://github.com/cconrad/dotfiles.git /home/${USER}/.dotfiles
 COPY --chown=${USER}:${group} ansible.cfg /home/${USER}/.dotfiles/ansible.cfg
 RUN bash -c "/home/${USER}/dotfiles"
-
-RUN rm ~/.ansible-vault/vault.secret
 
 # CMD []
 #

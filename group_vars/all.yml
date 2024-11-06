@@ -51,8 +51,3 @@ default_roles:
   # - whalebrew
   # - zellij
   - zoxide
-
-op:
-  git:
-    user:
-      email: op://Private/bpjobaxendyrw43ekbrioiqfny/email

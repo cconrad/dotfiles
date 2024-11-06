@@ -1,5 +1,4 @@
-
-Fully automated development environment.
+# Automated development environment
 
 This repo is heavily influenced by [TechDufus](https://github.com/TechDufus/dotfiles)'s repo. Go check it out!
 
@@ -75,77 +74,11 @@ Below is a list of all available values. Not all are required but incorrect valu
 | k8s.repo.version | string `(specify kubectl bin version)` | no       |
 ### 1Password Integration
 
-This project depends on a 1Password vault. This means you must have a setup and authenticated `op` for CLI access to your vault. This can be done by installing the 1Password desktop application **OR** can be setup with the `op` cli only, but it is a bit more annoying that way since the CLI tool can directly integrate with the Desktop application.
+This project depends on a 1Password vault. This means you must have installed and authenticated `op` for CLI access to your vault. This can be done by installing the 1Password desktop application **OR** can be setup with the `op` CLI only, but it is a bit more annoying that way since the CLI tool can directly integrate with the Desktop application.
 
 The initial run of `dotfiles` on a new system **should** error without 1Password being setup and having access to a vault (currently defaults to `my.1password.com`)
 
-##### Deprecated `vault.secret` / `ansible-vault` method
-
-The original method for deploying secrets was to create `ansible-vault` encrypted strings, which would be decrypted by the secret in `~/.ansible-vault/vault.secret`. This method no longer is supported, in favor of a more secure and flexible 1Password vault.
-
-It is more flexible in the sense that rotating secrets is just updating the 1Password item, instead of needing to re-encrypt a string and commit it to github. The more you mess with encrypting / decrypting / commiting to Github, the higher the risk of a real secret being exposed.
-
-Additionally, if the original `vault.secret` value was ever discovered, even though it's no longer being used by this project, could still be used to get the encrypted strings via the git history of this project and decrypted. That `vault.secret` password has been scorched from the earth. 🔥
-#### OP (1Password) Variable
-
-Manage environment-critical items without needing `ansible-vault`, by using your `1Password` vault.
-
-> [!NOTE]
-> Currently, unless an `account` value is specified, the following `op` vaults assume `my.1password.com` vault.
-##### op.git
-
-`op.git` is where you will store any git-related vault paths. All values must be paths to vault.
-
-###### op.git.user
-This variable stores `email` which is as `string` of your vault path to you github account email.
-
-Example `op.git.user` config:
-```yaml
-op:
-  git:
-    user:
-      email: "op://Personal/Github/email"
-```
-
-Example full `op.git` config:
-```yaml
-op:
-  git:
-    user:
-      email: "op://Personal/Github/email"
-```
-
-##### op.system.hosts
-
-> [!WARNING]
-> `op.system.hosts` is not implemented yet, but the information is the target implementation structure.
-
-`op.system.hosts` is a list of vault `<string>` entries that will become a single line in your `/etc/hosts` file.
-
-Example `op.system.hosts` config:
-```yaml
-op:
-  system:
-    hosts:
-      - vault_path: op://Hosts/k8s-ingress
-        account: some-other-account.1password.com
-      - vault_path: op://Hosts/k8s-api
-        account: some-other-account.1password.com
-```
-
-Example full `op` config:
-```yaml
-op:
-  git:
-    user:
-      email: "op://Personal/Github/email"
-  system:
-    hosts:
-      - vault_path: op://Hosts/k8s-ingress
-        account: some-other-account.1password.com
-      - vault_path: op://Hosts/k8s-api
-        account: some-other-account.1password.com
-```
+1Password is more flexible than Ansible Vault in the sense that rotating secrets is just updating the 1Password item, instead of needing to re-encrypt a string and commit it to GitHub. The more you mess with encrypting / decrypting / commiting to Github, the higher the risk of a real secret being exposed.
 
 ## Usage
 
@@ -161,12 +94,10 @@ This shell script is also used to initialize your environment after bootstrappin
 ```bash
 curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles | bash -s -- --ask-become-pass
 ```
-
 If you want to run only a specific role, you can specify the following bash command:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/cconrad/dotfiles/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
 ```
-
 ### Update
 
 This repository is continuously updated with new features and settings which become available to you when updating.
@@ -199,4 +130,3 @@ dotfiles -t <tab><tab>
 dotfiles -t t<tab>
 dotfiles -t ne<tab>
 ```
-

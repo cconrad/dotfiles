@@ -38,10 +38,8 @@ RIGHT_ANGLE="${GREEN}\xE2\x88\x9F${NC}"
 set -e
 
 # Paths
-VAULT_SECRET_FILE="$HOME/.ansible-vault/vault.secret"
 OP_INSTALLED=false
 OP_AUTHENTICATED=false
-OP_VAULT_SECRET=""
 ID=""
 DOTFILES_LOG="$HOME/.dotfiles.log"
 DOTFILES_DIR="$HOME/.dotfiles"
@@ -255,7 +253,6 @@ confirmVaultAccess
 
 if [[ "$OP_INSTALLED" = true && "$OP_AUTHENTICATED" = true ]]; then
   printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}Checking for 1Password CLI: 1Password Authentication successful! ☕${NC}\n"
-  rm -f $VAULT_SECRET_FILE
   ansible-playbook "$DOTFILES_DIR/main.yml" "$@"
 else
   printf "${OVERWRITE}${LRED} [X]  ${LRED}Checking for 1Password CLI: Unable to Authenticate with 1Password.${NC}\n"
