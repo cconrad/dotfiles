@@ -1,0 +1,19 @@
+---
+- name: "{{ role_name }} | Get currently installed filename"
+  ansible.builtin.shell: "ls -r ~/.local/bin/Obsidian-*.AppImageX | head -n 1 | xargs -n 1 basename"
+  register: obsidian_current_filename
+  changed_when: false
+  failed_when: false
+
+# Now if the file exists, obsidian_current_filename.rc == 0 and obsidian_current_filename.stdout will contain the filename
+# If the file does not exist, obsidian_current_filename.rc > 0
+
+# Call `curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | jq -r '.assets[] | select(.browser_download_url | test("\\.AppImage$") and (contains("arm64") | not)) | .browser_download_url'` and check whether the output contains the filename
+
+# If yes, we have the latest version installed
+
+# If no:
+  # we should parse the curl output to find the path to the AppImage
+  # download the AppImage
+  # create or update the desktop shortcuts
+  # delete the previous version
