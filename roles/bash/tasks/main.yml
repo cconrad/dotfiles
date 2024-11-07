@@ -22,4 +22,9 @@
     mode: "644"
     path: "{{ ansible_user_dir }}/.bashrc"
     prepend_newline: true
-  when: "'bash' in default_roles"
+
+- name: "{{ role_name }} | Make .bash_profile load .bashrc"
+  ansible.builtin.copy:
+    dest: "{{ ansible_user_dir }}/.bash_profile"
+    mode: "644"
+    src: ".bash_profile"
