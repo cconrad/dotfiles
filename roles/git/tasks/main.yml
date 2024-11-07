@@ -8,12 +8,6 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Set init.defaultBranch"
-  community.general.git_config:
-    name: init.defaultBranch
-    scope: global
-    value: main
-
 - name: "{{ role_name }} | Set core.autocrlf"
   community.general.git_config:
     name: core.autocrlf
@@ -50,6 +44,18 @@
           - read
           - op://Private/{{ ansible_facts.nodename }}/ansible/git.user.name
       register: op_git_user_name
+      failed_when: false
+      changed_when: false
+
+    - name: "{{ role_name }} | Get init.defaultBranch"
+      ansible.builtin.command:
+        argv:
+          - op
+          - --account
+          - my.1password.com
+          - read
+          - op://Private/{{ ansible_facts.nodename }}/ansible/git.init.defaultBranch
+      register: op_git_init_defaultBranch
       failed_when: false
       changed_when: false
 
@@ -113,6 +119,13 @@
         regexp: "GIT_COMMITTER_EMAIL="
         state: present
       when: op_git_user_email.rc == 0
+
+    - name: "{{ role_name }} | Set init.defaultBranch"
+      community.general.git_config:
+        name: init.defaultBranch
+        scope: global
+        value: "{{ op_git_init_defaultBranch.stdout }}"
+      when: op_git_init_defaultBranch.rc == 0
 
 # - name: "Git | Set user.signingkey"
 #   community.general.git_config:
