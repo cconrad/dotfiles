@@ -20,6 +20,19 @@
     scope: global
     value: ssh
 
+- name: "{{ role_name }} | Add bash alias to copy branch name"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias gitcb='git rev-parse --abbrev-ref HEAD | tr -d "\n" | xclip -selection clipboard'
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (git.alias)"
+    mode: "644"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
+
 - name: "{{ role_name }} | Name and email from 1Password"
   when: op_installed
   block:

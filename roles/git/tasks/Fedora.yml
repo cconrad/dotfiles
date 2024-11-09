@@ -3,5 +3,6 @@
   ansible.builtin.dnf:
     name:
       - git
+      - xclip
     state: present
   become: true
