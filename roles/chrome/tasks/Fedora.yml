@@ -1,0 +1,25 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add RPM GPG key"
+  ansible.builtin.rpm_key:
+    fingerprint: 4CCA1EAF950CEE4AB83976DCA040830F7FAC5991
+    key: https://dl.google.com/linux/linux_signing_key.pub
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
+  ansible.builtin.yum_repository:
+    baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
+    description: Google Chrome
+    enabled: true
+    file: google-chrome
+    gpgcheck: true
+    gpgkey: https://dl.google.com/linux/linux_signing_key.pub
+    mode: "644"
+    name: google-chrome
+    sslverify: true
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: google-chrome-stable
+    state: present
+  become: true
