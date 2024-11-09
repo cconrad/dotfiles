@@ -1,0 +1,12 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - sway
+      - sway-config-fedora
+      - sway-systemd
+      - swaybg
+      - swayidle
+      - swaylock
+    state: present
+  become: true

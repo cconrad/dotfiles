@@ -40,6 +40,7 @@ default_roles:
   # - spotify
   # - sshfs
   - starship
+  - sway
   # - taskfile
   # - terraform
   # - terragrunt
