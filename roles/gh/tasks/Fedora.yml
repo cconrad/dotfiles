@@ -1,11 +1,11 @@
 ---
-- name: "GitHub CLI | {{ ansible_distribution }} | Install dnf5-plugins"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install dnf5-plugins"
   ansible.builtin.dnf:
     name: dnf5-plugins
     state: present
   become: true
 
-- name: "GitHub CLI | {{ ansible_distribution }} | Add GitHub CLI repository"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
   ansible.builtin.yum_repository:
     baseurl: https://cli.github.com/packages/rpm/
     description: GitHub CLI
@@ -14,12 +14,68 @@
     name: gh-cli
   become: true
 
-- name: "GitHub CLI | {{ ansible_distribution }} | Install gh"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
     name: gh
     enablerepo: gh-cli
     state: present
   become: true
 
-# TODO If we have a PAT, we could set GH_TOKEN and call `gh extension install copilot` here.
-# TODO If gh copilot was installed, we could add `eval "$(gh copilot alias -- bash)"  to the bashrc.
+- name: "{{ role_name }} | {{ ansible_distribution }} | Check authentication status"
+  ansible.builtin.command:
+    argv:
+      - gh
+      - auth
+      - status
+  changed_when: false
+  failed_when: false
+  register: gh_auth_status
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install Copilot extension"
+  ansible.builtin.command:
+    argv:
+      - gh
+      - extension
+      - install
+      - github/gh-copilot
+  changed_when: "'Installed extension github/gh-copilot' in gh_extension_install.stdout"
+  register: gh_extension_install
+  when: gh_auth_status.rc == 0
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | 1Password operations"
+  when: op_installed and gh_auth_status.rc != 0
+  block:
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Get token"
+      ansible.builtin.command:
+        argv:
+          - op
+          - --account
+          - my.1password.com
+          - read
+          - "{{ gh.op.token }}"
+      register: gh_op_token
+      changed_when: false
+
+    - name: "{{ role_name }} | {{ ansible_distribution }} | Install Copilot extension"
+      ansible.builtin.command:
+        argv:
+          - gh
+          - extension
+          - install
+          - github/gh-copilot
+      changed_when: false
+      environment: 
+        GH_TOKEN: "{{ gh_op_token.stdout }}"
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add bash alias"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      eval "$(gh copilot alias -- bash)"
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (gh.alias)"
+    mode: "644"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
