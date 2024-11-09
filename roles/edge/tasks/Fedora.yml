@@ -1,0 +1,35 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add RPM GPG key"
+  ansible.builtin.rpm_key:
+    fingerprint: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    key: https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
+  ansible.builtin.yum_repository:
+    baseurl: https://packages.microsoft.com/yumrepos/edge
+    description: Microsoft Edge
+    enabled: true
+    file: microsoft-edge
+    gpgcheck: true
+    gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+    mode: "644"
+    name: microsoft-edge
+    sslverify: true
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: microsoft-edge-stable
+    state: present
+  become: true
+
+- name: "{{ role_name }} | Create desktop shortcut for each profile"
+  ansible.builtin.template:
+    dest: "{{ ansible_user_dir }}/.local/share/applications/microsoft-edge-{{ profile.name }}.desktop"
+    mode: "600"
+    src: edge-profile.desktop.j2
+  loop: "{{ edge.profiles }}"
+  loop_control:
+    loop_var: profile
+  when: edge.profiles is defined

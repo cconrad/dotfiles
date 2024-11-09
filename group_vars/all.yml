@@ -8,6 +8,7 @@ default_roles:
   - btop
   # - discord
   # - docker
+  - edge
   # - flatpak
   - fonts
   - fzf

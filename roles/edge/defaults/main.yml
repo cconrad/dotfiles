@@ -1,0 +1,7 @@
+---
+edge:
+  profiles:
+    - name: personal
+      friendly_name: Personal
+    - name: work
+      friendly_name: Work
