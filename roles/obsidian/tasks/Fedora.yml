@@ -77,15 +77,17 @@
         path: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
         mode: 'u+x'
 
-    - name: "{{ role_name }} | Create desktop shortcut"
+    - name: "{{ role_name }} | Create desktop entry"
       ansible.builtin.template:
-        src: obsidian.desktop.j2
         dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian.desktop"
+        mode: "600"
+        src: obsidian.desktop.j2
 
-    - name: "{{ role_name }} | Create desktop shortcut for each vault"
+    - name: "{{ role_name }} | Create desktop entry for each vault"
       ansible.builtin.template:
-        src: obsidian-vault.desktop.j2
         dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian-{{ vault.name }}.desktop"
+        mode: "600"
+        src: obsidian-vault.desktop.j2
       loop: "{{ obsidian_vaults }}"
       loop_control:
         loop_var: vault
