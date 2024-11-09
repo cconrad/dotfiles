@@ -36,6 +36,7 @@ default_roles:
   # - pwsh
   # - python
   # - raycast
+  - ripgrep
   # - ruby
   # - rust
   # - slides
