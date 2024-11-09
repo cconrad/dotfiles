@@ -10,19 +10,6 @@
   register: bash_os_family_config
   when: not bash_os_distribution_config.stat.exists
 
-- name: "{{ role_name }} | Set locale"
-  ansible.builtin.blockinfile:
-    append_newline: true
-    block: |
-      export LC_ALL="en_DK.utf8"
-      export LANG="en_DK.utf8"
-    create: true
-    insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (bash.locale)"
-    mode: "644"
-    path: "{{ ansible_user_dir }}/.bashrc"
-    prepend_newline: true
-
 - name: "{{ role_name }} | Make .bash_profile load .bashrc"
   ansible.builtin.copy:
     dest: "{{ ansible_user_dir }}/.bash_profile"
