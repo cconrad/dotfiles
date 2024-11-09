@@ -26,15 +26,16 @@
     dest: "{{ ansible_user_dir }}/.config/1Password/ssh/agent.toml"
     mode: "0644"
 
-- name: "{{ role_name }} | Export SSH_AUTH_SOCK"
-  ansible.builtin.blockinfile:
-    append_newline: true
-    block: |
-      export SSH_AUTH_SOCK=~/.1password/agent.sock
+- name: "{{ role_name }} | {{ ansible_distribution }} | Create ~/.config/environment.d"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/environment.d"
+    mode: "755"
+    state: directory
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Set SSH_AUTH_SOCK"
+  ansible.builtin.lineinfile:
     create: true
-    insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (1password.ssh-auth-sock)"
+    dest: "{{ ansible_user_dir }}/.config/environment.d/21-1password.conf"
+    line: "SSH_AUTH_SOCK={{ ansible_user_dir }}/.1password/agent.sock"
     mode: "644"
-    path: "{{ ansible_user_dir }}/.bashrc"
-    prepend_newline: true
-  when: "'bash' in default_roles"
+    regexp: "^SSH_AUTH_SOCK="
