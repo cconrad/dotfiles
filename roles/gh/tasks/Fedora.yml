@@ -1,17 +1,15 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install dnf5-plugins"
-  ansible.builtin.dnf:
-    name: dnf5-plugins
-    state: present
-  become: true
-
 - name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
   ansible.builtin.yum_repository:
     baseurl: https://cli.github.com/packages/rpm/
     description: GitHub CLI
-    enabled: yes
-    gpgcheck: no
+    enabled: true
+    file: gh-cli
+    gpgcheck: true
+    gpgkey: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x23F3D4EA75716059
+    mode: "644"
     name: gh-cli
+    sslverify: true
   become: true
 
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
