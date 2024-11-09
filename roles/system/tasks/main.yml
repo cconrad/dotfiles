@@ -8,10 +8,10 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "System | Set hosts"
-  ansible.builtin.template:
-    dest: "/etc/hosts"
-    src: hosts.j2
-    mode: "0644"
-  become: true
-  when: not ansible_host_environment_is_wsl
+# - name: "System | Set hosts"
+#   ansible.builtin.template:
+#     dest: "/etc/hosts"
+#     src: hosts.j2
+#     mode: "0644"
+#   become: true
+#   when: not ansible_host_environment_is_wsl

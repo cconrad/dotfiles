@@ -1,0 +1,19 @@
+---
+system:
+  keyboard:
+    xkb_default_layout: dk
+    xkb_default_model: pc105
+  locale:
+    lang: en_US.UTF-8
+    language: en_US:en
+    lc_address: en_DK.UTF-8
+    lc_collate: en_DK.UTF-8
+    lc_ctype: en_DK.UTF-8
+    lc_identification: en_DK.UTF-8
+    lc_monetary: en_DK.UTF-8
+    lc_messages: en_US.UTF-8
+    lc_measurement: en_DK.UTF-8
+    lc_name: en_DK.UTF-8
+    lc_paper: en_DK.UTF-8
+    lc_telephone: en_DK.UTF-8
+    lc_time: en_DK.UTF-8

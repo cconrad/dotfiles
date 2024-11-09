@@ -85,7 +85,7 @@
         create: true
         line: 'GIT_AUTHOR_NAME="{{ op_git_user_name.stdout }}"'
         mode: "644"
-        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
         regexp: "GIT_AUTHOR_NAME="
         state: present
       when: op_git_user_name.rc == 0
@@ -95,7 +95,7 @@
         create: true
         line: 'GIT_COMMITTER_NAME="{{ op_git_user_name.stdout }}"'
         mode: "644"
-        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
         regexp: "GIT_COMMITTER_NAME="
         state: present
       when: op_git_user_name.rc == 0
@@ -105,7 +105,7 @@
         create: true
         line: 'GIT_AUTHOR_EMAIL="{{ op_git_user_email.stdout }}"'
         mode: "644"
-        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
         regexp: "GIT_AUTHOR_EMAIL="
         state: present
       when: op_git_user_email.rc == 0
@@ -115,7 +115,7 @@
         create: true
         line: 'GIT_COMMITTER_EMAIL="{{ op_git_user_email.stdout }}"'
         mode: "644"
-        path: "{{ ansible_user_dir }}/.config/environment.d/10-git.conf"
+        path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
         regexp: "GIT_COMMITTER_EMAIL="
         state: present
       when: op_git_user_email.rc == 0
