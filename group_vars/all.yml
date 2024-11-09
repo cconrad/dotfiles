@@ -7,6 +7,7 @@ default_roles:
   - bat
   - btop
   - chrome
+  - code
   # - discord
   # - docker
   - edge

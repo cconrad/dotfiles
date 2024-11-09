@@ -1,0 +1,25 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add RPM GPG key"
+  ansible.builtin.rpm_key:
+    fingerprint: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    key: https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
+  ansible.builtin.yum_repository:
+    baseurl: https://packages.microsoft.com/yumrepos/vscode
+    description: Visual Studio Code
+    enabled: true
+    file: vscode
+    gpgcheck: true
+    gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+    mode: "644"
+    name: code
+    sslverify: true
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: code
+    state: present
+  become: true
