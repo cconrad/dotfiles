@@ -8,54 +8,35 @@ default_roles:
   - btop
   - chrome
   - code
-  # - discord
-  # - docker
   - edge
-  # - flatpak
   - fonts
   - fzf
   - gh
   - git
-  # - go
-  # - helm
   - jq
-  # - k8s
-  # - k9s
-  # - kitty
-  # - lazygit
   - libreoffice
   - lsd
-  # - lua
   - mc
-  # - nala
   - ncdu
-  # - neofetch
   # - neovim
-  # - nerdfetch
   # - npm
   # - nvm
   - obsidian
   - phpstorm
   # - podman
-  # - pwsh
   # - python
   # - raycast
   - ripgrep
-  # - ruby
-  # - rust
   # - slides
-  # - spotify
+  - ssh
   # - sshfs
   - starship
   - sway
-  # - taskfile
-  # - terraform
   # - terragrunt
   - tldr
   # - tmate
   - tmux
   # - tshark
-  # - warp
   # - whalebrew
   # - zellij
   - zoxide
