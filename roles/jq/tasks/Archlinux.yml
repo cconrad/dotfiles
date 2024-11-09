@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  community.general.pacman:
+    name:
+      - jq
+    state: present
+  become: true
