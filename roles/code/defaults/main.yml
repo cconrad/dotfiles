@@ -7,9 +7,11 @@ code:
     - esbenp.prettier-vscode
     - github.copilot
     - github.copilot-chat
+    - humao.rest-client
     - mhutchie.git-graph
     - ms-vscode.remote-explorer
     - ms-vscode-remote.remote-ssh
     - ms-vscode-remote.remote-ssh-edit
     - ms-python.python
     - ms-python.black-formatter
+    - rangav.vscode-thunder-client
