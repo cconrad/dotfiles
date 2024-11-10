@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - kanshi
+    state: present
+  become: true

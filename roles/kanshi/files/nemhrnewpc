@@ -1,0 +1,14 @@
+profile nomad {
+    output eDP-1 enable
+}
+
+profile home {
+    output "Lenovo Group Limited LEN D32qc-20 0x30525431" {
+        mode 2560x1440
+        position 0,0
+    }
+    output eDP-1 {
+        mode 1920x1080
+        position 2560,0
+    }
+}
