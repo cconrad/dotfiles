@@ -1,0 +1,5 @@
+{
+	"crash-reporter-id": "296f5b36-f15f-4fde-aa93-a51dcf9acfe7",
+	"enable-crash-reporter": true,
+    "password-store":"gnome-libsecret"
+}

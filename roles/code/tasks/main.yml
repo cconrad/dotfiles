@@ -8,16 +8,16 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Create config directory"
-  ansible.builtin.file:
-    mode: "700"
-    path: "{{ ansible_user_dir }}/.config/Code"
-    state: directory
-
 - name: "{{ role_name }} | Create User directory"
   ansible.builtin.file:
-    mode: "755"
+    mode: "700"
     path: "{{ ansible_user_dir }}/.config/Code/User"
+    state: directory
+
+- name: "{{ role_name }} | Create .vscode directory"
+  ansible.builtin.file:
+    mode: "700"
+    path: "{{ ansible_user_dir }}/.vscode"
     state: directory
 
 - name: "{{ role_name }} | Configure user settings"
@@ -31,6 +31,12 @@
     dest: "{{ ansible_user_dir }}/.config/Code/User/keybindings.json"
     mode: "644"
     src: User/keybindings.json
+
+- name: "{{ role_name }} | Configure startup arguments"
+  ansible.builtin.copy:
+    dest: "{{ ansible_user_dir }}/.vscode/argv.json"
+    mode: "644"
+    src: argv.json
 
 - name: "{{ role_name }} | Install extensions"
   ansible.builtin.command:
