@@ -18,7 +18,7 @@ default_roles:
   - lsd
   - mc
   - ncdu
-  # - neovim
+  - neovim
   # - npm
   # - nvm
   - obsidian

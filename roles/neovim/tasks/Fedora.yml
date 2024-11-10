@@ -1,0 +1,14 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Remove vi(m)"
+  ansible.builtin.dnf:
+    name:
+      - vim-minimal
+      - vim-enhanced
+    state: absent
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: neovim
+    state: present
+  become: true
