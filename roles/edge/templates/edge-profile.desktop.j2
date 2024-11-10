@@ -2,7 +2,7 @@
 Version=1.0
 Name=Edge ({{ profile.friendly_name }})
 GenericName=Web Browser
-Exec=microsoft-edge-stable --profile-directory="profile-{{ profile.name }}" %U
+Exec=microsoft-edge-stable --profile-directory=profile-{{ profile.name }} %U
 StartupNotify=true
 Terminal=false
 Icon=microsoft-edge
@@ -13,8 +13,8 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=microsoft-edge-stable --profile-directory="profile-{{ profile.name }}"
+Exec=microsoft-edge-stable --profile-directory=profile-{{ profile.name }}
 
 [Desktop Action new-private-window]
 Name=New InPrivate Window
-Exec=microsoft-edge-stable --profile-directory="profile-{{ profile.name }}" --inprivate
+Exec=microsoft-edge-stable --profile-directory=profile-{{ profile.name }} --inprivate
