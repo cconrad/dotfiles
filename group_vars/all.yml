@@ -21,7 +21,7 @@ default_roles:
   - ncdu
   - neovim
   # - npm
-  # - nvm
+  - nvm
   - obsidian
   - phpstorm
   - podman
