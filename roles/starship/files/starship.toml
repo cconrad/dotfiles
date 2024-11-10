@@ -358,7 +358,7 @@ symbol = " "
 
 [os]
 style = "peach"
-disabled = false
+disabled = true
 
 [os.symbols]
 Alpaquita = " "
@@ -433,7 +433,7 @@ symbol = "󱘗 "
 symbol = " "
 
 [shell]
-disabled = false
+disabled = true
 bash_indicator = " "
 zsh_indicator = " "
 powershell_indicator = "󰨊 "
