@@ -58,4 +58,11 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+for_window {
+    [shell="xwayland"] title_format "%title [XWayland]"
+    [class="Microsoft-edge"] border none
+    [class="obsidian"] border none
+}
+
 include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
