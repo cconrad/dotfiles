@@ -2,7 +2,6 @@
 - name: "{{ role_name }} | {{ ansible_distribution }} | Remove vi(m)"
   ansible.builtin.dnf:
     name:
-      - vim-minimal
       - vim-enhanced
     state: absent
   become: true
