@@ -1,5 +1,6 @@
 ---
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
-  community.general.homebrew_cask:
+  ansible.builtin.dnf:
     name: kitty
     state: present
+  become: true
