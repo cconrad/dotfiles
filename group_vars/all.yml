@@ -23,7 +23,7 @@ default_roles:
   # - nvm
   - obsidian
   - phpstorm
-  # - podman
+  - podman
   # - python
   # - raycast
   - ripgrep
