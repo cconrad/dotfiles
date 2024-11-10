@@ -15,4 +15,5 @@ code:
     - ms-python.python
     - ms-python.black-formatter
     - rangav.vscode-thunder-client
+    - redhat.ansible
     - timonwong.shellcheck
