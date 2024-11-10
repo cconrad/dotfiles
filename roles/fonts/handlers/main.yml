@@ -1,0 +1,6 @@
+---
+- name: fonts | Update font cache
+  ansible.builtin.command:
+    argv:
+      - fc-cache
+      - -fv

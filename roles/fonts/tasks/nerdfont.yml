@@ -1,0 +1,28 @@
+---
+- name: "{{ role_name }} | Check {{ item.font_name }} installation status"
+  ansible.builtin.shell:
+    cmd: fc-list | grep -i '{{ item.font_name }}'
+  changed_when: false
+  failed_when: false
+  register: nerdfont_installed
+
+- name: "{{ role_name }} | Install {{ item.font_name }}"
+  when: nerdfont_installed.rc != 0
+  block:
+    - name: "{{ role_name }} | Create font directory"
+      ansible.builtin.file:
+        mode: "755"
+        path: "{{ ansible_user_dir }}/.local/share/fonts"
+        state: directory
+
+    - name: "{{ role_name }} | Extract {{ item.font_name }}"
+      ansible.builtin.unarchive:
+        decrypt: false
+        dest: "{{ ansible_user_dir }}/.local/share/fonts"
+        include:
+          - "*.ttf"
+        keep_newer: true
+        mode: "444"
+        remote_src: true
+        src: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item.file_name }}.tar.xz
+      notify: fonts | Update font cache

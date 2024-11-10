@@ -1,0 +1,30 @@
+fonts:
+  nerdfonts:
+    - file_name: 0xProto
+      font_name: 0xProto Nerd Font
+    - file_name: BigBlueTerminal
+      font_name: BigBlueTerm437 Nerd Font
+    - file_name: IBMPlexMono
+      font_name: BlexMono Nerd Font
+    - file_name: CascadiaCode
+      font_name: CaskaydiaCove Nerd Font
+    - file_name: DaddyTimeMono
+      font_name: DaddyTimeMono Nerd Font
+    - file_name: DejaVuSansMono
+      font_name: DejaVuSansM Nerd Font
+    - file_name: FantasqueSansMono
+      font_name: FantasqueSansM Nerd Font
+    - file_name: FiraCode
+      font_name: FiraCode Nerd Font
+    - file_name: Iosevka
+      font_name: Iosevka Nerd Font
+    - file_name: IosevkaTerm
+      font_name: IosevkaTerm Nerd Font
+    - file_name: JetBrainsMono
+      font_name: JetBrainsMono Nerd Font
+    - file_name: UbuntuMono
+      font_name: UbuntuMono Nerd Font
+    - file_name: VictorMono
+      font_name: VictorMono Nerd Font
+    - file_name: ZedMono
+      font_name: ZedMono Nerd Font
