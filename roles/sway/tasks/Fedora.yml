@@ -2,11 +2,12 @@
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
     name:
-      - sway
+      - "@sway-desktop-environment"
+      - desktop-backgrounds-compat
+      - kanshi
+      - rofi-themes
+      - rofi-wayland
       - sway-config-fedora
       - sway-systemd
-      - swaybg
-      - swayidle
-      - swaylock
     state: present
   become: true
