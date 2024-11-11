@@ -5,11 +5,13 @@ set $rofi_cmd rofi -terminal '$term'
 set $menu $rofi_cmd -show drun
 output * bg /usr/share/backgrounds/default.png fill
 bindsym $mod+Return exec $term
-bindsym $mod+Shift+q kill
+bindsym Mod1+F4 kill
 bindsym $mod+d exec $menu
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'You heard me!' 'swaymsg exit'
+bindsym $mod+Shift+l exec loginctl lock-session
+bindsym $mod+Shift+k exec kanshi
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
