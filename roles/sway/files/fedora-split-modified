@@ -8,7 +8,7 @@ bindsym $mod+Return exec $term
 bindsym Mod1+F4 kill
 bindsym $mod+d exec $menu
 floating_modifier $mod normal
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r exec swaymsg reload && kanshi
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'You heard me!' 'swaymsg exit'
 bindsym $mod+Shift+l exec loginctl lock-session
 bindsym $mod+Shift+k exec kanshi
