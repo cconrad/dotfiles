@@ -2,7 +2,7 @@
 - name: "{{ role_name }} | Extract server item title and alias"
   ansible.builtin.shell: |
     op item get "{{ item }}" --format=json \
-      | jq '{title: .title, alias: (.fields[] | select(.label == "alias") | .value)}'
+      | jq '{title: .title, alias: (.fields[] | select(.label == "alias") | .value), user: (.fields[] | select(.label == "user") | .value)}'
   changed_when: false
   register: op_server_item
 
