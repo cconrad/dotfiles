@@ -60,6 +60,7 @@
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.maxLineCount": 2,
+  "window.customTitleBarVisibility": "auto",
   "window.title": "${dirty}${folderName}",
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.editor.enablePreview": false,
