@@ -61,6 +61,7 @@
   "terminal.integrated.showExitAlert": false,
   "terminal.integrated.stickyScroll.maxLineCount": 2,
   "window.customTitleBarVisibility": "auto",
+  "window.restoreWindows": "none",
   "window.title": "${dirty}${folderName}",
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.editor.enablePreview": false,
