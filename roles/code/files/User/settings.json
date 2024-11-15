@@ -46,6 +46,9 @@
   "remote.SSH.enableDynamicForwarding": false,
   "remote.SSH.enableX11Forwarding": false,
   "remote.SSH.externalSSH_ASKPASS": true,
+  "remote.SSH.remotePlatform": {
+      "*": "linux"
+  },
   "remote.SSH.useLocalServer": false,
   "terminal.integrated.drawBoldTextInBrightColors": true,
   "terminal.integrated.confirmOnKill": "never",
