@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - rofi-wayland
+    state: present
+  become: true
