@@ -20,6 +20,7 @@ default_roles:
   - mc
   - ncdu
   - neovim
+  - networkmanagerdmenu
   # - npm
   - nvm
   - obsidian
@@ -28,6 +29,7 @@ default_roles:
   # - python
   # - raycast
   - ripgrep
+  - rofi
   # - slides
   - ssh
   # - sshfs
@@ -39,5 +41,6 @@ default_roles:
   - tmux
   # - tshark
   # - whalebrew
+  # - wireguard
   # - zellij
   - zoxide
