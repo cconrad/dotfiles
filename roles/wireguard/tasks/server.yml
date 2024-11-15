@@ -1,0 +1,13 @@
+---
+  # Filter to only the Wireguard connections (by existance of a section called "Wireguard")
+- name: "{{ role_name }} | Extract connection details"
+  ansible.builtin.shell: |
+    op item get "{{ item }}" --format=json \
+      | jq '{name: .title, section: (.sections[] | select(.label == "Wireguard") | .label), ipv4_addresses: (.fields[] | select(.label == "ipv4.addresses") | .value), private_key: (.fields[] | select(.label == "wireguard.private-key") | .value)}'
+  changed_when: false
+  register: op_server_item
+
+- name: "{{ role_name }} | Add connection to list"
+  ansible.builtin.set_fact:
+    server_items_with_wireguard_connection: "{{ server_items_with_wireguard_connection + [op_server_item.stdout | from_json] }}"
+  when: op_server_item.stdout != ""

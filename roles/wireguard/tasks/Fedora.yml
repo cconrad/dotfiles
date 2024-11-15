@@ -1,6 +1,6 @@
 ---
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
-  community.general.pacman:
-    name: wireguard-tools
+  ansible.builtin.dnf:
+    name: NetworkManager
     state: present
   become: true

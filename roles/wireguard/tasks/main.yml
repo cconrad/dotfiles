@@ -1,9 +1,41 @@
----
-- name: "Wireguard | Checking for Distribution Config: {{ ansible_distribution }}"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
-  register: wireguard_distribution_config
+# ---
+# - name: "Wireguard | Checking for Distribution Config: {{ ansible_distribution }}"
+#   ansible.builtin.stat:
+#     path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+#   register: wireguard_distribution_config
 
-- name: "Wireguard | Run Tasks: {{ ansible_distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
-  when: wireguard_distribution_config.stat.exists
+# - name: "Wireguard | Run Tasks: {{ ansible_distribution }}"
+#   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+#   when: wireguard_distribution_config.stat.exists
+
+- name: "{{ role_name }} | Initialize server items list"
+  ansible.builtin.set_fact:
+    server_items_with_wireguard_connection: []
+
+- name: "{{ role_name }} | 1Password operations"
+  when: op_installed
+  block:
+    - name: "{{ role_name }} | Extract IDs of server items"
+      ansible.builtin.shell: |
+        op item list --categories Server --format=json \
+          | jq '[.[] | .id]'
+      register: op_server_items
+      changed_when: false
+
+    - name: "{{ role_name }} | Parse IDs of server items"
+      ansible.builtin.set_fact:
+        op_server_items: "{{ op_server_items.stdout | from_json }}"
+      changed_when: false
+
+    - name: "{{ role_name }} | Process server items for Wireguard connections"
+      ansible.builtin.include_tasks:
+        file: server.yml
+      loop: "{{ op_server_items }}"
+
+# TODO
+# - name: "{{ role_name }} | Run community.general.nmcli module for each result"
+- name: "{{ role_name }} | Configure connection {{ item.name }}"
+  community.general.nmcli:
+    conn_name: "{{ item.name }}"
+    type: wireguard
+  loop: "{{ server_items_with_wireguard_connection }}"
