@@ -8,7 +8,7 @@ output * bg /usr/share/backgrounds/default.png fill
 bindsym $mod+Return exec $term
 bindsym Mod1+F4 kill
 bindsym $mod+d exec $menu
-bindsym $mod+Shift+n exec ~/.local/bin/networkmanager_dmenu
+bindsym $mod+Shift+n exec ~/.local/bin/networkmanager-dmenu-2.5.0/networkmanager_dmenu
 floating_modifier $mod normal
 bindsym $mod+Shift+r exec swaymsg reload && kanshi
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'You heard me!' 'swaymsg exit'
