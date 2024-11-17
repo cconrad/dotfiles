@@ -2,7 +2,7 @@
 set $mod Mod4
 set $term foot
 set $rofi_cmd rofi -terminal '$term'
-set $menu $rofi_cmd -show drun -show-icons -drun-match-fields name -drun-display-format '{name}'
+set $menu $rofi_cmd -show drun -show-icons -drun-match-fields name,exec -drun-display-format '{name}'
 focus_follows_mouse no
 output * bg /usr/share/backgrounds/default.png fill
 bindsym $mod+Return exec $term
