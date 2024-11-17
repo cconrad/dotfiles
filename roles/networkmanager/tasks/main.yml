@@ -1,0 +1,69 @@
+---
+# TODO BEGIN Move to Fedora.yml
+- name: "{{ role_name }} | {{ ansible_distribution }} | Remove potentially conflicting packages"
+  ansible.builtin.dnf:
+    name:
+      - kf6-kwallet
+    state: absent
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - gnome-keyring
+      - gnome-keyring-pam
+      - NetworkManager
+      - network-manager-applet
+      - procps-ng
+    state: present
+  become: true
+# TODO END Move to Fedora.yml
+
+- name: "{{ role_name }} | Check whether gnome-keyring-daemon is running"
+  ansible.builtin.command:
+    argv:
+      - pgrep
+      - -u
+      - "{{ ansible_user_id }}"
+      - -f
+      - gnome-keyring-daemon
+  changed_when: false
+  failed_when: false
+  register: networkmanager_gnome_keyring_daemon_running
+
+- name: "{{ role_name }} | Start gnome-keyring-daemon"
+  ansible.builtin.command:
+    argv:
+      - gnome-keyring-daemon
+      - --start
+      - --daemonize
+      - --components=secrets
+  when: networkmanager_gnome_keyring_daemon_running.rc != 0
+
+- name: "{{ role_name }} | Check whether nm-applet is running"
+  ansible.builtin.command:
+    argv:
+      - pgrep
+      - -u
+      - "{{ ansible_user_id }}"
+      - -f
+      - nm-applet
+  changed_when: false
+  failed_when: false
+  register: networkmanager_nm_applet_running
+
+- name: "{{ role_name }} | Start nm-applet"
+  ansible.builtin.shell:
+    cmd: nm-applet &
+  when: networkmanager_nm_applet_running.rc != 0
+
+- name: "{{ role_name }} | 1Password operations"
+  block:
+    - name: "{{ role_name }} | List items tagged ansible"
+      ansible.builtin.shell:
+        cmd: "op item list --tags ansible --format json | jq -r '.[].id'"
+      register: networkmanager_1password_ids_tagged_ansible
+    
+    - name: "{{ role_name }} | Get IDs of items tagged ansible"
+      ansible.builtin.set_fact:
+        networkmanager_1password_ids_tagged_ansible: networkmanager_1password_ids_tagged_ansible.stdout_lines
