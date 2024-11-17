@@ -1,4 +1,12 @@
 ---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Uninstall conflicting packages"
+  ansible.builtin.dnf:
+    name:
+      - sway-config-minimal
+      - sway-config-upstream
+    state: absent
+  become: true
+
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
     name:
