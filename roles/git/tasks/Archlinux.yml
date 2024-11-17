@@ -1,5 +1,5 @@
 ---
-- name: "Git | {{ ansible_distribution }} | Install git"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.pacman:
     name:
       - git

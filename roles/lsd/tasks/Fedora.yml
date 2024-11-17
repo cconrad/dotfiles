@@ -1,5 +1,5 @@
 ---
-- name: "LSD | {{ ansible_distribution }} | Install lsd"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
     name: lsd
     state: present

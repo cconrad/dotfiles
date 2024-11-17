@@ -1,11 +1,11 @@
 ---
-- name: "FZF | Uninstall APT fzf"
+- name: "{{ role_name }} | Uninstall APT package"
   ansible.builtin.apt:
     name: fzf
     state: absent
   become: true
 
-- name: "FZF | Clone Latest Version"
+- name: "{{ role_name }} | Clone Latest Version"
   ansible.builtin.git:
     repo: https://github.com/junegunn/fzf.git
     depth: 1
