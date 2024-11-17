@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Uninstall conflicting packages"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Uninstall existing configs"
   ansible.builtin.dnf:
     name:
       - sway-config-minimal
@@ -17,5 +17,20 @@
       - rofi-wayland
       - sway-config-fedora
       - sway-systemd
+    state: present
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Uninstall conflicting configs"
+  ansible.builtin.dnf:
+    name:
+      - sway-config-minimal
+      - sway-config-upstream
+    state: absent
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - sway-config-fedora
     state: present
   become: true
