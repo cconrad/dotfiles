@@ -8,6 +8,12 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
+- name: "{{ role_name }} | Create bin directory"
+  ansible.builtin.file:
+    mode: "700"
+    path: "{{ ansible_user_dir }}/.local/bin"
+    state: directory
+
 - name: "{{ role_name }} | Install"
   ansible.builtin.unarchive:
     creates: "{{ ansible_user_dir }}/.local/bin/networkmanager_dmenu"
