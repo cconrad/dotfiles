@@ -16,7 +16,7 @@
 
 - name: "{{ role_name }} | Install"
   ansible.builtin.unarchive:
-    creates: "{{ ansible_user_dir }}/.local/bin/networkmanager_dmenu"
+    creates: "{{ ansible_user_dir }}/.local/bin/networkmanager-dmenu-2.5.0/networkmanager_dmenu"
     dest: "{{ ansible_user_dir }}/.local/bin"
     include:
       - networkmanager-dmenu-2.5.0/networkmanager_dmenu
