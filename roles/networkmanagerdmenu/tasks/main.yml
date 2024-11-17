@@ -19,7 +19,7 @@
     creates: "{{ ansible_user_dir }}/.local/bin/networkmanager_dmenu"
     dest: "{{ ansible_user_dir }}/.local/bin"
     include:
-      - networkmanager_dmenu
+      - networkmanager-dmenu-2.5.0/networkmanager_dmenu
     remote_src: true
     src: https://github.com/firecat53/networkmanager-dmenu/archive/refs/tags/v2.5.0.tar.gz
 
