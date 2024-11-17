@@ -19,16 +19,9 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Uninstall conflicting configs"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Configure"
   ansible.builtin.dnf:
-    name:
-      - sway-config-minimal
-      - sway-config-upstream
-    state: absent
-  become: true
-
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
-  ansible.builtin.dnf:
+    allowerasing: true
     name:
       - sway-config-fedora
     state: present
