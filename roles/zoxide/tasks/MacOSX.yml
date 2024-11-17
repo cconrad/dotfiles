@@ -1,5 +1,5 @@
 ---
-- name: "Zoxide | MacOSX | Install Zoxide"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   community.general.homebrew:
     name: zoxide
     state: present
