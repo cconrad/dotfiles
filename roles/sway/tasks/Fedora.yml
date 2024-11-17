@@ -15,7 +15,6 @@
       - kanshi
       - rofi-themes
       - rofi-wayland
-      - sway-config-fedora
       - sway-systemd
     state: present
   become: true
