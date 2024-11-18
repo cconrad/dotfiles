@@ -3,17 +3,13 @@
   ansible.builtin.shell:
     cmd: |
       op item get {{ item }} --format json \
-        | jq 'select(.sections[]?.label == "nmconnection") | { "title": .title, "keyfile": (.fields[] | select(.label == "notesPlain").value), "wireguard.private-key": (.fields[] | select(.label == "wireguard.private-key").value), "wireguard-peers": (reduce .fields[] as $item ({}; if $item.label | startswith("wireguard-peer.") then . + {($item.label): $item.value} else . end)) }'
+        | jq 'select(.sections[]?.label == "nmconnection") | { "title": .title, "keyfile": (.fields[] | select(.label == "notesPlain").value), "wireguard.private-key": (.fields[] | select(.label == "wireguard.private-key").value) }'
   changed_when: false
   register: networkmanager_parsed_item
 
 - name: "{{ role_name }} | With items representing nmconnections"
   when: networkmanager_parsed_item.stdout != ""
   block:
-    - name: "Parsed item"
-      ansible.builtin.debug:
-        var: (networkmanager_parsed_item.stdout | from_json).keyfile
-    
     - name: "{{ role_name }} | Create keyfile"
       ansible.builtin.copy:
         content: "{{ (networkmanager_parsed_item.stdout | from_json).keyfile }}"
@@ -26,7 +22,9 @@
       register: networkmanager_copy_nmconnection
     
     - name: "{{ role_name }} | New or modified keyfile"
-      when: networkmanager_copy_nmconnection.changed
+      when: true
+      # todo
+      # when: networkmanager_copy_nmconnection.changed
       block:
         - name: "{{ role_name }} | Reload connections"
           ansible.builtin.command:
@@ -34,7 +32,7 @@
               - nmcli
               - connection
               - reload
-            become: true
+          become: true
         
         - name: "{{ role_name }} | Store private key in gnome-keyring"
           ansible.builtin.command:
