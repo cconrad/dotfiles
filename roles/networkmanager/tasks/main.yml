@@ -62,8 +62,10 @@
     - name: "{{ role_name }} | List items tagged ansible"
       ansible.builtin.shell:
         cmd: "op item list --tags ansible --format json | jq -r '.[].id'"
+      changed_when: false
       register: networkmanager_1password_ids_tagged_ansible
     
-    - name: "{{ role_name }} | Get IDs of items tagged ansible"
-      ansible.builtin.set_fact:
-        networkmanager_1password_ids_tagged_ansible: networkmanager_1password_ids_tagged_ansible.stdout_lines
+    - name: "{{ role_name }} | Item operations"
+      ansible.builtin.include_tasks:
+        file: item.yml
+      loop: "{{ networkmanager_1password_ids_tagged_ansible.stdout_lines }}"
