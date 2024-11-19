@@ -1,0 +1,45 @@
+---
+- name: "{{ role_name }} | Get item by ID"
+  ansible.builtin.shell:
+    cmd: |
+      op item get {{ item }} --format json \
+        | jq 'select(.sections[]?.label == "nmconnection") | { "title": .title, "keyfile": (.fields[] | select(.label == "notesPlain").value), "wireguard.private-key": (.fields[] | select(.label == "wireguard.private-key").value) }'
+  changed_when: false
+  register: networkmanager_parsed_item
+
+- name: "{{ role_name }} | With items representing nmconnections"
+  when: networkmanager_parsed_item.stdout != ""
+  block:
+    - name: "{{ role_name }} | Create keyfile"
+      ansible.builtin.copy:
+        content: "{{ (networkmanager_parsed_item.stdout | from_json).keyfile }}"
+        dest: "/etc/NetworkManager/system-connections/{{ (networkmanager_parsed_item.stdout | from_json).title }}.nmconnection"
+        directory_mode: "755"
+        group: root
+        mode: "600"
+        owner: root
+      become: true
+      register: networkmanager_copy_nmconnection
+    
+    - name: "{{ role_name }} | New or modified keyfile"
+      when: true
+      # todo
+      # when: networkmanager_copy_nmconnection.changed
+      block:
+        - name: "{{ role_name }} | Reload connections"
+          ansible.builtin.command:
+            argv:
+              - nmcli
+              - connection
+              - reload
+          become: true
+        
+        - name: "{{ role_name }} | Store private key in gnome-keyring"
+          ansible.builtin.command:
+            argv:
+              - nmcli
+              - connection
+              - modify
+              - "{{ (networkmanager_parsed_item.stdout | from_json).title }}"
+              - wireguard.private-key
+              - "{{ (networkmanager_parsed_item.stdout | from_json)['wireguard.private-key'] }}"
