@@ -1,0 +1,62 @@
+---
+- name: "{{ role_name }} | Get item by ID"
+  ansible.builtin.shell:
+    cmd: |
+      op item get {{ item }} --format json \
+        | jq 'select(.sections[]?.label == "wgconf") | { "title": .title, "keyfile": (.fields[] | select(.label == "notesPlain").value), "wireguard.private-key": (.fields[] | select(.label == "wireguard.private-key").value) }'
+  changed_when: false
+  register: networkmanager_parsed_item
+
+- name: "{{ role_name }} | With items representing wgconfs"
+  # TODO Check whether connection exists
+  when: networkmanager_parsed_item.stdout != ""
+  block:
+    - name: "{{ role_name }} | Create wgconf"
+      ansible.builtin.copy:
+        content: "{{ (networkmanager_parsed_item.stdout | from_json).keyfile }}"
+        dest: "{{ ansible_user_dir }}/{{ (networkmanager_parsed_item.stdout | from_json).title }}.conf"
+        mode: "600"
+    
+    - name: "{{ role_name }} | Import wgconf"
+      ansible.builtin.command:
+        argv:
+          - nmcli
+          - connection
+          - import
+          - type
+          - wireguard
+          - file
+          - "{{ ansible_user_dir }}/{{ (networkmanager_parsed_item.stdout | from_json).title }}.conf"
+
+    - name: "{{ role_name }} | New wgconf"
+      when: true
+      # todo
+      # when: networkmanager_copy_nmconnection.changed
+      block:
+        - name: "{{ role_name }} | Reload connections"
+          ansible.builtin.command:
+            argv:
+              - nmcli
+              - connection
+              - reload
+          become: true
+
+        # - name: "{{ role_name }} | Set private-key-flags"
+        #   ansible.builtin.command:
+        #     argv:
+        #       - nmcli
+        #       - connection
+        #       - modify
+        #       - "{{ (networkmanager_parsed_item.stdout | from_json).title }}"
+        #       - wireguard.private-key-flags
+        #       - 1
+
+        # - name: "{{ role_name }} | Store private key in gnome-keyring"
+        #   ansible.builtin.command:
+        #     argv:
+        #       - nmcli
+        #       - connection
+        #       - modify
+        #       - "{{ (networkmanager_parsed_item.stdout | from_json).title }}"
+        #       - wireguard.private-key
+        #       - "{{ (networkmanager_parsed_item.stdout | from_json)['wireguard.private-key'] }}"
