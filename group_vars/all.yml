@@ -41,6 +41,6 @@ default_roles:
   - tmux
   # - tshark
   # - whalebrew
-  # - wireguard
+  - wireguard
   # - zellij
   - zoxide
