@@ -27,13 +27,10 @@ default_roles:
   - obsidian
   - phpstorm
   - podman
-  # - python
-  # - raycast
   - ripgrep
   - rofi
-  # - slides
   - ssh
-  # - sshfs
+  - sshfs
   - starship
   - sway
   # - terragrunt
