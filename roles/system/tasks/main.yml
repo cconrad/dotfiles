@@ -10,8 +10,8 @@
 
 - name: "{{ role_name }} | Create ~/.config/environment.d"
   ansible.builtin.file:
+    mode: "700"
     path: "{{ ansible_user_dir }}/.config/environment.d"
-    mode: "755"
     state: directory
 
 - name: "{{ role_name }} | Set locale"
@@ -19,7 +19,7 @@
     create: true
     dest: "{{ ansible_user_dir }}/.config/environment.d/10-locale.conf"
     line: "{{ item.key | upper }}={{ item.value }}"
-    mode: "644"
+    mode: "600"
     regexp: "^{{ item.key | upper }}="
   loop: "{{ system.locale | dict2items }}"
 
@@ -28,6 +28,36 @@
     create: true
     dest: "{{ ansible_user_dir }}/.config/environment.d/11-keyboard.conf"
     line: "{{ item.key | upper }}={{ item.value }}"
-    mode: "644"
+    mode: "600"
     regexp: "^{{ item.key | upper }}="
   loop: "{{ system.keyboard | dict2items }}"
+
+- name: "{{ role_name }} | 1Password operations"
+  when: op_installed
+  block:
+    - name: "{{ role_name }} | Get item ID for {{ ansible_facts.nodename }}"
+      ansible.builtin.shell:
+        cmd: "op item list --tags ansible/hosts --format json | jq -r '.[] | select(.title == \"{{ ansible_facts.nodename }}\") | .id'"
+      register: system_hosts_item_id
+      failed_when: false
+      changed_when: false
+
+    - name: "{{ role_name }} | Item for {{ ansible_facts.nodename }} exists"
+      when: system_hosts_item_id.rc == 0 and system_hosts_item_id.stdout != ""
+      block:
+        - name: "{{ role_name }} | Get hosts"
+          ansible.builtin.shell:
+            cmd: "op item get {{ system_hosts_item_id.stdout }} --fields label=notesPlain --format json | jq -r '.value'"
+          changed_when: false
+          failed_when: false
+          register: system_hosts_notesPlain
+        
+        - name: "{{ role_name }} | Set hosts"
+          ansible.builtin.copy:
+            content: "{{ system_hosts_notesPlain.stdout }}"
+            dest: /etc/hosts
+            group: root
+            mode: "644"
+            owner: root
+          when: system_hosts_notesPlain.rc == 0 and system_hosts_notesPlain.stdout != ""
+          become: true
