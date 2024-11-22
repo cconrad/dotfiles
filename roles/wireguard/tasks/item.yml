@@ -20,4 +20,3 @@
         owner: root
       become: true
       notify: networkmanager | reload connections
-      register: networkmanager_copy_nmconnection

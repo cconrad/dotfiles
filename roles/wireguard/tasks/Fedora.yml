@@ -1,0 +1,21 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - NetworkManager
+      - procps-ng
+    state: present
+  become: true
+
+- name: "{{ role_name }} | 1Password operations"
+  block:
+    - name: "{{ role_name }} | List nmconnections"
+      ansible.builtin.shell:
+        cmd: "op item list --tags ansible/nmconnection --format json | jq -r '.[].id'"
+      changed_when: false
+      register: networkmanager_1password_ids_tagged_ansible
+    
+    - name: "{{ role_name }} | Item operations"
+      ansible.builtin.include_tasks:
+        file: item.yml
+      loop: "{{ networkmanager_1password_ids_tagged_ansible.stdout_lines }}"
