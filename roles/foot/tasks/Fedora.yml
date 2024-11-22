@@ -1,6 +1,7 @@
 ---
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
-    name: foot
+    name:
+      - foot
     state: present
   become: true

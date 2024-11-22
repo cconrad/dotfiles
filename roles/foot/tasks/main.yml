@@ -19,3 +19,11 @@
     dest: "{{ ansible_user_dir }}/.config/foot/foot.ini"
     mode: "600"
     src: foot.ini
+
+- name: "{{ role_name }} | Start server"
+  ansible.builtin.systemd_service:
+    daemon_reload: yes
+    enabled: yes
+    name: foot-server
+    scope: user
+    state: started
