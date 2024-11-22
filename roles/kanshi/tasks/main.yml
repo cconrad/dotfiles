@@ -25,3 +25,11 @@
     mode: "600"
     src: "{{ ansible_facts.nodename }}"
   when: node_config.stat.exists
+
+- name: "{{ role_name }} | Start"
+  ansible.builtin.systemd_service:
+    daemon_reload: yes
+    enabled: yes
+    name: kanshi
+    scope: user
+    state: started
