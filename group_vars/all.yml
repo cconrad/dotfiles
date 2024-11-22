@@ -22,7 +22,7 @@ default_roles:
   - ncdu
   - neovim
   - networkmanagerdmenu
-  # - npm
+  - npm
   - nvm
   - obsidian
   - phpstorm
