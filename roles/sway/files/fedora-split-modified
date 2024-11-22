@@ -9,10 +9,9 @@ bindsym $mod+d exec rofi -terminal 'foot' -modes 'drun,window' -show drun -show-
 bindsym $mod+Shift+d exec rofi -terminal 'foot' -modes 'drun,window' -show window -show-icons -drun-match-fields 'name,exec' -drun-display-format '{name}'
 bindsym $mod+Shift+n exec ~/.local/bin/networkmanager-dmenu-2.5.0/networkmanager_dmenu
 floating_modifier $mod normal
-bindsym $mod+Shift+r exec swaymsg reload && kanshi
+bindsym $mod+Shift+r exec swaymsg reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'You heard me!' 'swaymsg exit'
 bindsym $mod+Shift+l exec loginctl lock-session
-bindsym $mod+Shift+k exec kanshi
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
