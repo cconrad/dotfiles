@@ -1,0 +1,11 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - gnome-keyring
+      - gnome-keyring-pam
+      - NetworkManager
+      - network-manager-applet
+      - procps-ng
+    state: present
+  become: true
