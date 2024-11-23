@@ -1,0 +1,6 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: rclone
+    state: present
+  become: true
