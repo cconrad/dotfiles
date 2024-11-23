@@ -5,4 +5,4 @@
       - zoxide
     state: present
   become: true
-  when: ansible_distribution_version >= '21.04'
+  when: ansible_facts.distribution_version >= '21.04'

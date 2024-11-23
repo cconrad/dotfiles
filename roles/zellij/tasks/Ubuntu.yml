@@ -38,7 +38,7 @@
   block:
     - name: "Zellij | Define zellij_file"
       ansible.builtin.set_fact:
-        zellij_file: "zellij-{{ ansible_machine }}-unknown-linux-musl"
+        zellij_file: "zellij-{{ ansible_facts.machine }}-unknown-linux-musl"
 
     - name: "Zellij | Ensure clean download destination"
       ansible.builtin.file:

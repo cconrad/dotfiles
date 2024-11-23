@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Obsidian
-Exec={{ ansible_user_dir}}/.local/bin/{{ obsidian_latest_filename }}
+Exec={{ ansible_facts.user_dir }}/.local/bin/{{ obsidian_latest_filename }}
 Terminal=false
 Type=Application
 Icon=obsidian

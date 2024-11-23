@@ -41,11 +41,11 @@
   block:
     - name: "NPM | Get System Arch"
       ansible.builtin.set_fact:
-        nodejs_arch: "{{ ansible_machine | replace('x86_64', 'x64') | replace('aarch64', 'arm64') }}"
+        nodejs_arch: "{{ ansible_facts.machine | replace('x86_64', 'x64') | replace('aarch64', 'arm64') }}"
 
     - name: "NPM | Register Pagkage Name"
       ansible.builtin.set_fact:
-        nodejs_package_name: "node-{{ nodejs_latest_version.stdout }}-{{ ansible_system | lower }}-{{ nodejs_arch }}"
+        nodejs_package_name: "node-{{ nodejs_latest_version.stdout }}-{{ ansible_facts.system | lower }}-{{ nodejs_arch }}"
 
     - name: "NPM | Download NodeJS"
       ansible.builtin.get_url:

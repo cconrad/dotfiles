@@ -8,7 +8,7 @@
 
 - name: Nomad | {{ ansible_facts.distribution }} | Add the official HashiCorp Linux repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_facts.distribution_release }} main"
     state: present
   become: true
 

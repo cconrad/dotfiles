@@ -14,7 +14,7 @@
 
 - name: Helm | Get OS Architecture
   ansible.builtin.set_fact:
-    os_arch: "{{ ansible_machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
+    os_arch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
 
 - name: Helm | Add Helm APT repository
   ansible.builtin.apt_repository:

@@ -37,7 +37,7 @@
     name: nala
     state: present
   become: true
-  when: ansible_distribution_major_version == "22"
+  when: ansible_facts.distribution_major_version == "22"
 
 - name: "Nala | Install Nala-legacy"
   apt:
@@ -45,4 +45,4 @@
     state: present
     update_cache: true
   become: true
-  when: ansible_distribution_major_version == "20"
+  when: ansible_facts.distribution_major_version == "20"

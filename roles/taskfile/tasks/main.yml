@@ -3,20 +3,20 @@
   block:
     - name: TASKFILE | Ensure .task config dir exists
       ansible.builtin.file:
-        name: "{{ ansible_env.HOME }}/.task"
+        name: "{{ ansible_facts.env.HOME }}/.task"
         state: directory
         mode: "0755"
 
     - name: TASKFILE | Ensure .task/completions dir exists
       ansible.builtin.file:
-        name: "{{ ansible_env.HOME }}/.task/completions"
+        name: "{{ ansible_facts.env.HOME }}/.task/completions"
         state: directory
         mode: "0755"
 
     - name: TASKFILE | Pull latest task bash completion
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/go-task/task/main/completion/bash/task.bash"
-        dest: "{{ ansible_env.HOME }}/.task/completions/task.bash"
+        dest: "{{ ansible_facts.env.HOME }}/.task/completions/task.bash"
         mode: "0644"
 
 - name: TASKFILE | Load OS-Specific Taskfile
