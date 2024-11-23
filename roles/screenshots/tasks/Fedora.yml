@@ -1,0 +1,14 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - grim
+      - grimshot
+      - jq
+      - slurp
+      - swappy
+      - wl-clipboard
+      - xdg-desktop-portal
+      - xdg-desktop-portal-wlr
+    state: present
+  become: true

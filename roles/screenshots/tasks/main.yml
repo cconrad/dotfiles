@@ -8,20 +8,20 @@
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name}} | Create config directory"
+- name: "{{ role_name }} | Create config directory"
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/sway"
-    mode: "700"
+    mode: "755"  
+    path: "{{ ansible_user_dir }}/.config/swappy"
     state: directory
 
-- name: "{{ role_name}} | Override default configs"
-  ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/sway"
-    src: config.d
+- name: "{{ role_name }} | Create screenshot directory"
+  ansible.builtin.file:
+    mode: "755"  
+    path: "{{ ansible_user_dir }}/Pictures/Screenshots"
+    state: directory
 
-- name: "{{ role_name}} | Configure"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Configure"
   ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/sway/config"
-    mode: "644"
-    src: fedora-split-modified
-  notify: Reload sway
+    dest: "{{ ansible_user_dir }}/.config/swappy/config"
+    src: swappy-config
+    mode: "600"

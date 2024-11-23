@@ -31,6 +31,7 @@ default_roles:
   - rclone
   - ripgrep
   - rofi
+  - screenshots
   - ssh
   - sshfs
   - starship

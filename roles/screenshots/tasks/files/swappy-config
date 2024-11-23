@@ -1,0 +1,6 @@
+[Default]
+save_dir=$HOME/Pictures/Screenshots
+save_filename_format=%Y%m%d-%H%M%S.png
+show_panel=true
+paint_mode=arrow
+early_exit=true
