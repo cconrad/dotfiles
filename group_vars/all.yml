@@ -37,4 +37,5 @@ default_roles:
   - tldr
   - tmux
   - wireguard
+  - ytdlp
   - zoxide
