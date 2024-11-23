@@ -1,5 +1,5 @@
 ---
-- name: "TLDR | MacOSX | Install TLDR"
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   community.general.homebrew:
     name: tldr
     state: present
