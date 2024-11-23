@@ -1,0 +1,21 @@
+filetype plugin indent on
+" enable syntax highlighting
+syntax on
+set hidden
+set backspace=indent,eol,start
+" show existing tab with 3 spaces width
+set tabstop=3
+" when indenting with '>', use 3 spaces width
+set shiftwidth=3
+" On pressing tab, insert spaces instead
+set expandtab
+" show relative line numbers up- and downwards
+set relativenumber
+" show actual number instead of 0
+set number
+" highlight search results
+set hlsearch
+" search while typing
+set incsearch
+" clear highlighting when Esc is pressed
+nnoremap <silent> <Esc> :noh<CR><Esc>

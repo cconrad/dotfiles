@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - vim-enhanced
+    state: present
+  become: true
