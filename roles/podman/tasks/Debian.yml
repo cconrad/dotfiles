@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.package:
+    name:
+      - podman
+    state: present
+  become: true
