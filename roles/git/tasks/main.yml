@@ -140,7 +140,7 @@
           ansible.builtin.lineinfile:
             create: true
             line: 'GIT_COMMITTER_EMAIL="{{ git_user_email.stdout }}"'
-            mode: "644"
+            mode: "600"
             path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
             regexp: "GIT_COMMITTER_EMAIL="
             state: present
