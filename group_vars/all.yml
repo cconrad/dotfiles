@@ -30,6 +30,7 @@ default_roles:
   - rclone
   - ripgrep
   - rofi
+  - rsync
   - screenshots
   - ssh
   - sshfs
