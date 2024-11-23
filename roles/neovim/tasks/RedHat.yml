@@ -1,0 +1,17 @@
+---
+- name: Create directory for Neovim (Debian, RedHat)
+  ansible.builtin.file:
+    dest: /opt/nvim
+    state: directory
+
+- name: Download Neovim AppImage (Debian, RedHat)
+  ansible.builtin.get_url:
+    url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    dest: /opt/nvim/nvim
+    mode: 0777
+
+- name: Create symlink to Neovim (Debian, RedHat)
+  ansible.builtin.file:
+    src: /opt/nvim/nvim
+    dest: /usr/local/bin/nvim
+    state: link
