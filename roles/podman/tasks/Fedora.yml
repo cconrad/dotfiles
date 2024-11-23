@@ -1,6 +1,8 @@
 ---
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.dnf:
-    name: podman
+    name:
+      - buildah
+      - podman
     state: present
   become: true

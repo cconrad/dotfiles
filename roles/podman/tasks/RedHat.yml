@@ -2,6 +2,7 @@
 - name: "{{ role_name }} | {{ ansible_distribution }} | Install"
   ansible.builtin.package:
     name:
+      - buildah
       - podman
     state: present
   become: true
