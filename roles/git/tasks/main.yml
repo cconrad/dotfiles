@@ -1,11 +1,11 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+    path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
 - name: "{{ role_name }} | Set core.autocrlf"
@@ -29,7 +29,7 @@
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (git.alias)"
     mode: "644"
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts.user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"
 
@@ -101,7 +101,7 @@
     
         - name: "{{ role_name }} | Ensure environment.d directory exists"
           ansible.builtin.file:
-            path: "{{ ansible_user_dir }}/.config/environment.d"
+            path: "{{ ansible_facts.user_dir }}/.config/environment.d"
             state: directory
             mode: "700"
           when: git_user_name.rc == 0 or git_user_email.rc == 0
@@ -111,7 +111,7 @@
             create: true
             line: 'GIT_AUTHOR_NAME="{{ git_user_name.stdout }}"'
             mode: "600"
-            path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
+            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
             regexp: "GIT_AUTHOR_NAME="
             state: present
           when: git_user_name.rc == 0
@@ -121,7 +121,7 @@
             create: true
             line: 'GIT_COMMITTER_NAME="{{ git_user_name.stdout }}"'
             mode: "600"
-            path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
+            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
             regexp: "GIT_COMMITTER_NAME="
             state: present
           when: git_user_name.rc == 0
@@ -131,7 +131,7 @@
             create: true
             line: 'GIT_AUTHOR_EMAIL="{{ git_user_email.stdout }}"'
             mode: "600"
-            path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
+            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
             regexp: "GIT_AUTHOR_EMAIL="
             state: present
           when: git_user_email.rc == 0
@@ -141,7 +141,7 @@
             create: true
             line: 'GIT_COMMITTER_EMAIL="{{ git_user_email.stdout }}"'
             mode: "644"
-            path: "{{ ansible_user_dir }}/.config/environment.d/20-git.conf"
+            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
             regexp: "GIT_COMMITTER_EMAIL="
             state: present
           when: git_user_email.rc == 0

@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
   ansible.builtin.dnf:
     name:
       - vim-enhanced

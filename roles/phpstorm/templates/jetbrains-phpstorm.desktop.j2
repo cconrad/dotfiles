@@ -2,8 +2,8 @@
 Version=1.0
 Type=Application
 Name=PhpStorm
-Icon={{ ansible_user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}/bin/phpstorm.svg
-Exec="{{ ansible_user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}/bin/phpstorm.sh" %f
+Icon={{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}/bin/phpstorm.svg
+Exec="{{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}/bin/phpstorm.sh" %f
 Comment=Lightning-smart PHP IDE
 Categories=Development;IDE;
 Terminal=false

@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Dependencies"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Dependencies"
   ansible.builtin.apt:
     name:
       - cmake
@@ -12,7 +12,7 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
   ansible.builtin.apt_repository:
     mode: "644"
     repo: ppa:neovim-ppa/unstable

@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Update APT Repos"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Update APT Repos"
   ansible.builtin.apt:
     update_cache: true
   become: true

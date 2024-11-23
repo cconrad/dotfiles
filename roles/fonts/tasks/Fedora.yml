@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install powerline-fonts"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install powerline-fonts"
   ansible.builtin.dnf:
     name:
       - powerline-fonts

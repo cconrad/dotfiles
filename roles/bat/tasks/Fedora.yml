@@ -1,5 +1,5 @@
 ---
-- name: "Bat | {{ ansible_distribution }} | Install bat"
+- name: "Bat | {{ ansible_facts.distribution }} | Install bat"
   ansible.builtin.dnf:
     name: bat
     state: present

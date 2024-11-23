@@ -15,5 +15,5 @@
     - name: "Deploy Config"
       ansible.builtin.copy:
         src: config.toml
-        dest: "{{ ansible_user_dir }}/.config/atuin/config.toml"
+        dest: "{{ ansible_facts.user_dir }}/.config/atuin/config.toml"
         mode: "0644"

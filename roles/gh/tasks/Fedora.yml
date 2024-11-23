@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Add repository"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add repository"
   ansible.builtin.yum_repository:
     baseurl: https://cli.github.com/packages/rpm/
     description: GitHub CLI
@@ -12,14 +12,14 @@
     sslverify: true
   become: true
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
   ansible.builtin.dnf:
     name: gh
     enablerepo: gh-cli
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Check authentication status"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Check authentication status"
   ansible.builtin.command:
     argv:
       - gh
@@ -29,7 +29,7 @@
   failed_when: false
   register: gh_auth_status
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install Copilot extension"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install Copilot extension"
   ansible.builtin.command:
     argv:
       - gh
@@ -40,10 +40,10 @@
   register: gh_extension_install
   when: gh_auth_status.rc == 0
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | 1Password operations"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | 1Password operations"
   when: op_installed and gh_auth_status.rc != 0
   block:
-    - name: "{{ role_name }} | {{ ansible_distribution }} | Get token"
+    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Get token"
       ansible.builtin.command:
         argv:
           - op
@@ -54,7 +54,7 @@
       register: gh_op_token
       changed_when: false
 
-    - name: "{{ role_name }} | {{ ansible_distribution }} | Install Copilot extension"
+    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install Copilot extension"
       ansible.builtin.command:
         argv:
           - gh
@@ -65,7 +65,7 @@
       environment: 
         GH_TOKEN: "{{ gh_op_token.stdout }}"
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Add bash alias"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add bash alias"
   ansible.builtin.blockinfile:
     append_newline: true
     block: |
@@ -74,6 +74,6 @@
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (gh.alias)"
     mode: "644"
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts.user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"

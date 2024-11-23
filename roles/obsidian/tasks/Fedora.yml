@@ -11,26 +11,26 @@
 
 - name: "{{ role_name }} | Create scalable icon directory"
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/share/icons/hicolor/scalable/apps"
+    path: "{{ ansible_facts.user_dir }}/.local/share/icons/hicolor/scalable/apps"
     state: directory
     mode: "700"
 
 - name: "{{ role_name }} | Create bitmap icon directory"
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/share/icons/hicolor/512x512/apps"
+    path: "{{ ansible_facts.user_dir }}/.local/share/icons/hicolor/512x512/apps"
     state: directory
     mode: "700"
 
 - name: "{{ role_name }} | Install scalable icon"
   ansible.builtin.copy:
     src: obsidian.svg
-    dest: "{{ ansible_user_dir }}/.local/share/icons/hicolor/scalable/apps/obsidian.svg"
+    dest: "{{ ansible_facts.user_dir }}/.local/share/icons/hicolor/scalable/apps/obsidian.svg"
     mode: "600"
 
 - name: "{{ role_name }} | Install bitmap icon"
   ansible.builtin.copy:
     src: obsidian.png
-    dest: "{{ ansible_user_dir }}/.local/share/icons/hicolor/512x512/apps/obsidian.png"
+    dest: "{{ ansible_facts.user_dir }}/.local/share/icons/hicolor/512x512/apps/obsidian.png"
     mode: "600"
 
 - name: "{{ role_name }} | Determine installation status"
@@ -70,22 +70,22 @@
     - name: "{{ role_name }} | Download latest version"
       ansible.builtin.get_url:
         url: "{{ obsidian_latest_url.stdout }}"
-        dest: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
+        dest: "{{ ansible_facts.user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
 
     - name: "{{ role_name }} | Make executable"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
+        path: "{{ ansible_facts.user_dir }}/.local/bin/{{ obsidian_latest_filename }}"
         mode: 'u+x'
 
     - name: "{{ role_name }} | Create desktop entry"
       ansible.builtin.template:
-        dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian.desktop"
+        dest: "{{ ansible_facts.user_dir }}/.local/share/applications/obsidian.desktop"
         mode: "600"
         src: obsidian.desktop.j2
 
     - name: "{{ role_name }} | Create desktop entry for each vault"
       ansible.builtin.template:
-        dest: "{{ ansible_user_dir }}/.local/share/applications/obsidian-{{ vault.name }}.desktop"
+        dest: "{{ ansible_facts.user_dir }}/.local/share/applications/obsidian-{{ vault.name }}.desktop"
         mode: "600"
         src: obsidian-vault.desktop.j2
       loop: "{{ obsidian_vaults }}"
@@ -95,7 +95,7 @@
 
     - name: "{{ role_name }} | Remove previous version"
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/.local/bin/{{ obsidian_current_filename }}"
+        path: "{{ ansible_facts.user_dir }}/.local/bin/{{ obsidian_current_filename }}"
         state: absent
       when: obsidian_is_installed
   when: obsidian_needs_download

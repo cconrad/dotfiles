@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_distribution }} | Dependencies"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Dependencies"
   community.general.homebrew:
     name:
       - cmake
@@ -11,7 +11,7 @@
       - ripgrep
     state: present
 
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
   community.general.homebrew:
     name: neovim
     state: present

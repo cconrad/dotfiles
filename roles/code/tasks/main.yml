@@ -1,40 +1,40 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+    path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
 - name: "{{ role_name }} | Create User directory"
   ansible.builtin.file:
     mode: "700"
-    path: "{{ ansible_user_dir }}/.config/Code/User"
+    path: "{{ ansible_facts.user_dir }}/.config/Code/User"
     state: directory
 
 - name: "{{ role_name }} | Create .vscode directory"
   ansible.builtin.file:
     mode: "700"
-    path: "{{ ansible_user_dir }}/.vscode"
+    path: "{{ ansible_facts.user_dir }}/.vscode"
     state: directory
 
 - name: "{{ role_name }} | Configure user settings"
   ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/Code/User/settings.json"
+    dest: "{{ ansible_facts.user_dir }}/.config/Code/User/settings.json"
     mode: "644"
     src: User/settings.json
 
 - name: "{{ role_name }} | Configure user keybindings"
   ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.config/Code/User/keybindings.json"
+    dest: "{{ ansible_facts.user_dir }}/.config/Code/User/keybindings.json"
     mode: "644"
     src: User/keybindings.json
 
 - name: "{{ role_name }} | Configure startup arguments"
   ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/.vscode/argv.json"
+    dest: "{{ ansible_facts.user_dir }}/.vscode/argv.json"
     mode: "644"
     src: argv.json
 
