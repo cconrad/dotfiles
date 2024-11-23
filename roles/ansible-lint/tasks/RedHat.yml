@@ -1,0 +1,11 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Ensure the CRB repo is enabled"
+  community.general.dnf_config_manager:
+    name:
+      - crb
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.dnf:
+    name: python3-ansible-lint
+  become: true

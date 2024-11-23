@@ -1,0 +1,5 @@
+---
+- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
+  ansible.builtin.package:
+    name: ansible-lint
+  become: true
