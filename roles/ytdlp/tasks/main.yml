@@ -26,3 +26,5 @@
     argv:
       - "{{ ansible_facts.user_dir }}/.local/bin/yt-dlp"
       - -U
+  changed_when: ytdlp_update.stdout.find('yt-dlp is up to date') != -1
+  register: ytdlp_update
