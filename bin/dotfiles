@@ -104,7 +104,10 @@ function ubuntu_setup() {
     __task "Installing Python3"
     _cmd "sudo apt-get install -y python3"
   fi
-
+  if ! dpkg -s jq >/dev/null 2>&1; then
+    __task "Installing jq"
+    _cmd "sudo apt-get install -y jq"
+  fi
   local UBUNTU_MAJOR_VERSION=$(echo $VERSION_ID | cut -d. -f1)
   if [ $UBUNTU_MAJOR_VERSION -le 22 ]; then
     if ! dpkg -s python3-pip >/dev/null 2>&1; then
@@ -122,6 +125,10 @@ function fedora_setup() {
   if ! rpm -q ansible >/dev/null 2>&1; then
     __task "Installing Ansible"
     _cmd "sudo dnf install -y ansible"
+  fi
+  if ! rpm -q jq >/dev/null 2>&1; then
+    __task "Installing jq"
+    _cmd "sudo dnf install -y jq"
   fi
   if ! rpm -q git >/dev/null 2>&1; then
     __task "Installing Git"
@@ -159,12 +166,14 @@ function arch_setup() {
     __task "Installing Python3 Watchdog"
     _cmd "sudo pacman -S --noconfirm python-watchdog"
   fi
-
   if ! pacman -Q openssh >/dev/null 2>&1; then
     __task "Installing OpenSSH"
     _cmd "sudo pacman -S --noconfirm openssh"
   fi
-
+  if ! pacman -Q jq >/dev/null 2>&1; then
+    __task "Installing jq"
+    _cmd "sudo pacman -S --noconfirm jq"
+  fi
   __task "Setting Locale"
   _cmd "sudo localectl set-locale LANG=en_US.UTF-8"
 }

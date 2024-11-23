@@ -1,6 +1,0 @@
----
-- name: "{{ role_name }} | {{ ansible_distribution }} | Install"
-  ansible.builtin.dnf:
-    name: jq
-    state: present
-  become: true
