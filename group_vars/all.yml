@@ -28,6 +28,7 @@ default_roles:
   - obsidian
   - phpstorm
   - podman
+  - qbittorrent
   - rclone
   - ripgrep
   - rofi
