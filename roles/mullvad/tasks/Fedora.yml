@@ -1,0 +1,26 @@
+---
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add RPM GPG key"
+  ansible.builtin.rpm_key:
+    fingerprint: A1198702FC3E0A09A9AE5B75D5A1D4F266DE8DDF
+    key: https://repository.mullvad.net/rpm/mullvad-keyring.asc
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add repository"
+  ansible.builtin.yum_repository:
+    baseurl: https://repository.mullvad.net/rpm/stable/$basearch
+    description: Mullvad VPN
+    enabled: true
+    file: mullvad
+    gpgcheck: true
+    gpgkey: https://repository.mullvad.net/rpm/mullvad-keyring.asc
+    mode: "644"
+    name: mullvad
+    sslverify: true
+  become: true
+
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - mullvad-vpn
+    state: present
+  become: true
