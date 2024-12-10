@@ -40,6 +40,7 @@ default_roles:
   - sway
   - tldr
   - tmux
+  - vlc
   - wireguard
   - ytdlp
   - zoxide
