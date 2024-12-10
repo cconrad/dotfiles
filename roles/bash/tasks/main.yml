@@ -15,3 +15,27 @@
     dest: "{{ ansible_facts.user_dir }}/.bash_profile"
     mode: "644"
     src: ".bash_profile"
+
+- name: "{{ role_name }} | Create environment.d directory"
+  ansible.builtin.file:
+    mode: "700"
+    path: "{{ ansible_facts.user_dir }}/.config/environment.d"
+    state: directory
+
+- name: "{{ role_name }} | Copy systemd environment.d export script"
+  ansible.builtin.copy:
+    dest: "{{ ansible_facts.user_dir }}/.config/environment.d/export.sh"
+    mode: "700"
+    src: export.sh
+
+- name: "{{ role_name }} | Export systemd user environment"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      eval $(~/.config/environment.d/export.sh)
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (bash.export-systemd-user-environment)"
+    mode: "600"
+    path: "{{ ansible_facts.user_dir }}/.bashrc"
+    prepend_newline: true
