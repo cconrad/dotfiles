@@ -38,6 +38,7 @@ default_roles:
   - sshfs
   - starship
   - sway
+  - telnet
   - tldr
   - tmux
   - vlc

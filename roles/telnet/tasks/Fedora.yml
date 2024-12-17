@@ -1,0 +1,7 @@
+---
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+  ansible.builtin.dnf:
+    name:
+      - telnet
+    state: present
+  become: true
