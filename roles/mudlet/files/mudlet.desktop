@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Mudlet
+Exec=/home/claus/.local/bin/Mudlet-4.18.5-linux-x64.AppImage
+Terminal=false
+Type=Application
+Icon=mudlet
+StartupWMClass=mudlet
+Categories=Games;
