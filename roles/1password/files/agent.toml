@@ -4,4 +4,4 @@
 vault = "Private"
 
 [[ssh-keys]]
-vault = "NemHR"
+vault = "MinRefusion"
