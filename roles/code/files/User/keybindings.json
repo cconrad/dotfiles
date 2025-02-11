@@ -49,5 +49,10 @@
     {
         "key": "ctrl+alt+down",
         "command": "workbench.action.splitEditorDown"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.debug.panel.action.clearReplAction",
+        "when": "inDebugRepl"
     }
 ]
