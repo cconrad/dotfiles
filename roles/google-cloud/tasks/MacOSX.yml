@@ -1,0 +1,5 @@
+---
+- name: "{{ role_name }} | Install"
+  community.general.homebrew:
+    name: google-cloud-sdk
+    state: present
