@@ -12,16 +12,16 @@
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config"
     state: directory
-    mode: "0755"
+    mode: 0700
 
 - name: "{{ role_name }} | Ensure ssh 1Password config dir exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/1Password/ssh"
     state: directory
-    mode: "0700"
+    mode: 0700
 
 - name: "{{ role_name }} | Deploy ssh-agent config"
   ansible.builtin.copy:
     src: agent.toml
     dest: "{{ ansible_facts.user_dir }}/.config/1Password/ssh/agent.toml"
-    mode: "0644"
+    mode: 0644
