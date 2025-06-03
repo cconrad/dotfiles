@@ -1,0 +1,5 @@
+---
+- name: "Asciinema | macOS | Install"
+  community.general.homebrew:
+    name: asciinema
+    state: present
