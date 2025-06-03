@@ -1,0 +1,5 @@
+---
+- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+  community.general.homebrew:
+    name: ansible-lint
+    state: present
