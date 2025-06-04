@@ -1,8 +1,10 @@
 default_roles:
   - system
   - 1password
+  - alacritty
   - ansible-lint
   - asciinema
+  - atuin
   - bash
   - bat
   - btop
