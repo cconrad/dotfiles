@@ -1,12 +1,12 @@
 ---
-- name: Install Alacritty
+- name: "Alacritty | Windows | Install"
   ansible.builtin.include_role:
     name: winget
   vars:
     winget_packages:
       - Alacritty.Alacritty
 
-- name: Copy Alacritty config into Windows
+- name: "Alacritty | Windows | Copy Alacritty config into Windows"
   block:
     - name: Check to see if AppData\Roaming\alacritty exists
       ansible.builtin.stat:

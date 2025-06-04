@@ -1,0 +1,5 @@
+---
+- name: "Alacritty | macOS | Install"
+  community.general.homebrew:
+    name: alacritty
+    state: present
