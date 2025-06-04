@@ -6,14 +6,14 @@
 
 - name: "Atuin | MacOSX | Deploy Config"
   block:
-    - name: "Ensure atuin .config dir exists"
+    - name: "Atuin | MacOSX | Ensure atuin .config dir exists"
       ansible.builtin.file:
-        name: atuin
+        name: "{{ ansible_facts.user_dir }}/.config/atuin"
         state: directory
-        mode: "0755"
+        mode: 0700
 
-    - name: "Deploy Config"
+    - name: "Atuin | MacOSX | Deploy Config"
       ansible.builtin.copy:
         src: config.toml
         dest: "{{ ansible_facts.user_dir }}/.config/atuin/config.toml"
-        mode: "0644"
+        mode: 0600
