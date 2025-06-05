@@ -10,7 +10,6 @@ default_roles:
   - bat
   - btop
   - chirp
-  - code
   - devtunnel
   - edge
   - fonts
