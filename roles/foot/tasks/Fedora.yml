@@ -1,7 +1,15 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: "Foot | Fedora | Install"
   ansible.builtin.dnf:
     name:
       - foot
     state: present
   become: true
+
+- name: "Foot | Fedora | Start server"
+  ansible.builtin.systemd_service:
+    daemon_reload: yes
+    enabled: yes
+    name: foot-server
+    scope: user
+    state: started

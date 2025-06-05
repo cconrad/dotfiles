@@ -23,3 +23,13 @@
     name: microsoft-edge-stable
     state: present
   become: true
+
+- name: "{{ role_name }} | Create desktop shortcut for each profile"
+  ansible.builtin.template:
+    dest: "{{ ansible_facts.user_dir }}/.local/share/applications/microsoft-edge-{{ profile.name }}.desktop"
+    mode: "600"
+    src: edge-profile.desktop.j2
+  loop: "{{ edge.profiles }}"
+  loop_control:
+    loop_var: profile
+  when: edge.profiles is defined

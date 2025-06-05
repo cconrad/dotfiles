@@ -5,11 +5,11 @@ default_roles:
   - ansible-lint
   - asciinema
   - atuin
+  - azure
   - bash
   - bat
   - btop
-  - chrome
-  - code
+  - chirp
   - devtunnel
   - edge
   - fonts
