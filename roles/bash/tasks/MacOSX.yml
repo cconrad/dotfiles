@@ -1,0 +1,6 @@
+---
+# Bash is pre-installed on macOS, but we can install a newer version via Homebrew
+- name: "Bash | MacOSX | Install newer bash version"
+  community.general.homebrew:
+    name: bash
+    state: present
