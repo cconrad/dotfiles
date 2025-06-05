@@ -1,0 +1,5 @@
+---
+- name: "Kwctl | MacOSX | Install kwctl"
+  community.general.homebrew:
+    name: kwctl
+    state: present
