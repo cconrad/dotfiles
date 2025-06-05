@@ -10,7 +10,6 @@ default_roles:
   - bat
   - btop
   - chirp
-  - chrome
   - code
   - devtunnel
   - edge

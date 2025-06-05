@@ -1,0 +1,5 @@
+---
+- name: "Chrome | MacOSX | Install Google Chrome"
+  community.general.homebrew_cask:
+    name: google-chrome
+    state: present
