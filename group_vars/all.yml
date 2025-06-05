@@ -9,6 +9,7 @@ default_roles:
   - bash
   - bat
   - btop
+  - chirp
   - chrome
   - code
   - devtunnel
