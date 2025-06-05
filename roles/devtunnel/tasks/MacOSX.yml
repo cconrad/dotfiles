@@ -1,0 +1,5 @@
+---
+- name: "DevTunnel | MacOSX | Install Microsoft Dev Tunnels"
+  community.general.homebrew_cask:
+    name: devtunnel
+    state: present
