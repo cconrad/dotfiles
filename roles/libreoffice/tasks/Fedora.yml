@@ -1,5 +1,5 @@
 ---
-- name: "LibreOffice | {{ ansible_facts.distribution }} | Install LibreOffice"
+- name: "LibreOffice | Fedora | Install"
   ansible.builtin.dnf:
     name:
       - libreoffice
