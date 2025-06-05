@@ -1,0 +1,5 @@
+---
+- name: "GoReleaser | MacOSX | Install goreleaser"
+  community.general.homebrew:
+    name: goreleaser
+    state: present
