@@ -1,0 +1,6 @@
+---
+# Rofi is a Linux application launcher and is not available on macOS
+# macOS users can use Spotlight, Alfred, Raycast, or other application launchers
+- name: "Rofi | MacOSX | Not applicable"
+  ansible.builtin.debug:
+    msg: "Rofi is not available on macOS"

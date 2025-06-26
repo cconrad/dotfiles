@@ -1,0 +1,6 @@
+---
+# Winget is a Windows package manager and is not available on macOS
+# macOS uses Homebrew as the primary package manager
+- name: "Winget | MacOSX | Not applicable"
+  ansible.builtin.debug:
+    msg: "Winget is not available on macOS"

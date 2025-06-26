@@ -1,0 +1,6 @@
+---
+# macOS has built-in screenshot functionality (Cmd+Shift+3, Cmd+Shift+4, etc.)
+# No additional packages needed for basic screenshot functionality
+- name: "Screenshots | MacOSX | No additional packages needed"
+  ansible.builtin.debug:
+    msg: "macOS has built-in screenshot functionality"

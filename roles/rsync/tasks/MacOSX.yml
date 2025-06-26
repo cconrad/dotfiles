@@ -1,0 +1,5 @@
+---
+- name: "Rsync | MacOSX | Install rsync"
+  community.general.homebrew:
+    name: rsync
+    state: present

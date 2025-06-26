@@ -1,0 +1,5 @@
+---
+- name: "Tshark | MacOSX | Install wireshark (includes tshark)"
+  community.general.homebrew:
+    name: wireshark
+    state: present

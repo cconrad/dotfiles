@@ -1,0 +1,5 @@
+---
+- name: "PhpStorm | MacOSX | Install PhpStorm"
+  community.general.homebrew_cask:
+    name: phpstorm
+    state: present

@@ -1,0 +1,5 @@
+---
+- name: "Mullvad Beta | MacOSX | Install Mullvad VPN Beta"
+  community.general.homebrew_cask:
+    name: mullvad-vpn@beta
+    state: present

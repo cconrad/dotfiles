@@ -1,0 +1,5 @@
+---
+- name: "Taskfile | MacOSX | Install go-task"
+  community.general.homebrew:
+    name: go-task
+    state: present

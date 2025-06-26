@@ -1,0 +1,5 @@
+---
+- name: "YT-DLP | MacOSX | Install yt-dlp"
+  community.general.homebrew:
+    name: yt-dlp
+    state: present

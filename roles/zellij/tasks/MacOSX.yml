@@ -1,0 +1,5 @@
+---
+- name: "Zellij | MacOSX | Install zellij"
+  community.general.homebrew:
+    name: zellij
+    state: present

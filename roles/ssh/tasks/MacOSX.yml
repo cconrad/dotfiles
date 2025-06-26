@@ -1,0 +1,5 @@
+---
+- name: "SSH | MacOSX | Install openssh"
+  community.general.homebrew:
+    name: openssh
+    state: present

@@ -1,0 +1,6 @@
+---
+# Sway is a Wayland window manager for Linux and is not available on macOS
+# macOS has its own window management system
+- name: "Sway | MacOSX | Not applicable"
+  ansible.builtin.debug:
+    msg: "Sway window manager is not available on macOS"

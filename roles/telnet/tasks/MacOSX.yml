@@ -1,0 +1,5 @@
+---
+- name: "Telnet | MacOSX | Install telnet"
+  community.general.homebrew:
+    name: telnet
+    state: present

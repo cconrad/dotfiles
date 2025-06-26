@@ -1,0 +1,6 @@
+---
+# Nala is a frontend for APT package manager on Ubuntu/Debian and is not available on macOS
+# macOS uses Homebrew as the primary package manager
+- name: "Nala | MacOSX | Not applicable"
+  ansible.builtin.debug:
+    msg: "Nala is not available on macOS"

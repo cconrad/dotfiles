@@ -1,0 +1,5 @@
+---
+- name: "Vim | MacOSX | Install vim"
+  community.general.homebrew:
+    name: vim
+    state: present

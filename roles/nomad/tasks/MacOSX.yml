@@ -1,0 +1,5 @@
+---
+- name: "Nomad | MacOSX | Install nomad"
+  community.general.homebrew:
+    name: nomad
+    state: present

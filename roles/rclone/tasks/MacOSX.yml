@@ -1,0 +1,5 @@
+---
+- name: "Rclone | MacOSX | Install rclone"
+  community.general.homebrew:
+    name: rclone
+    state: present

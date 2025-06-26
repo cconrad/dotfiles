@@ -1,0 +1,5 @@
+---
+- name: "Neofetch | MacOSX | Install neofetch"
+  community.general.homebrew:
+    name: neofetch
+    state: present

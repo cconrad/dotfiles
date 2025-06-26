@@ -1,0 +1,5 @@
+---
+- name: "Rust | MacOSX | Install rust"
+  community.general.homebrew:
+    name: rust
+    state: present
