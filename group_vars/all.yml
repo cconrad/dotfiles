@@ -1,50 +1,53 @@
 default_roles:
-  - system
-  - 1password
-  - alacritty
-  - ansible-lint
-  - asciinema
-  - atuin
-  - azure
-  - bash
-  - bat
-  - btop
-  - chirp
-  - devtunnel
-  - edge
-  - fonts
-  - foot
-  - fzf
-  - gh
-  - git
-  - google-cloud
-  - kanshi
-  - libreoffice
-  - lsd
-  - mc
-  - mullvad
-  - ncdu
-  - neovim
-  - networkmanagerdmenu
-  - npm
-  - nvm
-  - obsidian
-  - phpstorm
-  - podman
-  - qbittorrent
-  - rclone
-  - ripgrep
-  - rofi
-  - rsync
-  - screenshots
-  - ssh
-  - sshfs
-  - starship
-  - sway
-  - telnet
-  - tldr
-  - tmux
-  - vlc
-  - wireguard
-  - ytdlp
-  - zoxide
+  # - system
+  # - 1password
+  # - alacritty
+  # - ansible-lint
+  # - asciinema
+  # - atuin
+  # - azure
+  # - bash
+  # - bat
+  # - btop
+  # - chirp
+  - claude-code
+  - claude-desktop
+  # - devtunnel
+  # - edge
+  # - fonts
+  # - foot
+  # - fzf
+  - gemini-cli
+  # - gh
+  # - git
+  # - google-cloud
+  # - kanshi
+  # - libreoffice
+  # - lsd
+  # - mc
+  # - mullvad
+  # - ncdu
+  # - neovim
+  # - networkmanagerdmenu
+  # - npm
+  # - nvm
+  # - obsidian
+  # - phpstorm
+  # - podman
+  # - qbittorrent
+  # - rclone
+  # - ripgrep
+  # - rofi
+  # - rsync
+  # - screenshots
+  # - ssh
+  # - sshfs
+  # - starship
+  # - sway
+  # - telnet
+  # - tldr
+  # - tmux
+  # - vlc
+  # - wireguard
+  # - ytdlp
+  # - zoxide
