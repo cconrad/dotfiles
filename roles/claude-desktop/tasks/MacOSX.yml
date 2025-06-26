@@ -1,0 +1,5 @@
+---
+- name: "Claude Desktop | macOS | Install"
+  community.general.homebrew_cask:
+    name: claude
+    state: present
