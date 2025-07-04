@@ -263,7 +263,7 @@ confirmVaultAccess
 
 if [[ "$OP_INSTALLED" = true && "$OP_AUTHENTICATED" = true ]]; then
   printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}Checking for 1Password CLI: 1Password Authentication successful! ☕${NC}\n"
-  ansible-playbook -i localhost, "$DOTFILES_DIR/main.yml" --ask-become-pass "$@"
+  ANSIBLE_BECOME_PASS=$(op read op://Private/$(hostname)/password) ansible-playbook -i localhost, "$DOTFILES_DIR/main.yml" "$@"
 else
   printf "${OVERWRITE}${LRED} [X]  ${LRED}Checking for 1Password CLI: Unable to Authenticate with 1Password.${NC}\n"
 fi
