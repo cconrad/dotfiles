@@ -1,5 +1,5 @@
 ---
-- name: "MC | MacOSX | Install midnight-commander"
+- name: "Midnight Commander | macOS | Install"
   community.general.homebrew:
     name: midnight-commander
     state: present
