@@ -190,9 +190,8 @@ function macos_setup() {
     _cmd "brew install ansible"
   fi
   if ! [ -x "$(command -v op)" ]; then
-    __task "Installing 1Password CLI"
-    _cmd "brew install 1password@beta"
-    _cmd "brew install 1password-cli@beta"
+    __task "Installing 1Password"
+    _cmd "brew install --cask 1password 1password-cli"
     __task "Setting up 1Password CLI"
 
     read -n 1 -s -r -p "Press any key to continue"
@@ -257,6 +256,7 @@ else
 fi
 
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
+
 update_ansible_galaxy $ID
 
 confirmVaultAccess
