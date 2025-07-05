@@ -58,3 +58,16 @@
     path: "{{ ansible_facts.user_dir }}/.bashrc"
     prepend_newline: true
   when: "'bash' in default_roles"
+
+- name: "Git | Linux | Add zsh alias to copy branch name"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias gitcb='git rev-parse --abbrev-ref HEAD | tr -d "\n" | xclip -selection clipboard'
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (git.alias)"
+    mode: "644"
+    path: "{{ ansible_facts.user_dir }}/.zshrc"
+    prepend_newline: true
+  when: "'zsh' in default_roles"

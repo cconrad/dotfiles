@@ -6,7 +6,7 @@ default_roles:
   # - asciinema
   # - atuin
   # - azure
-  # - bash
+  - bash
   # - bat
   # - btop
   # - chirp
