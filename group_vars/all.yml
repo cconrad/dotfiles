@@ -51,3 +51,4 @@ default_roles:
   # - wireguard
   # - ytdlp
   # - zoxide
+  - zsh

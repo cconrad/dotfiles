@@ -1,8 +1,0 @@
----
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
-  ansible.builtin.dnf:
-    name:
-      - git
-      - xclip
-    state: present
-  become: true

@@ -1,7 +1,0 @@
----
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
-  ansible.builtin.pacman:
-    name:
-      - git
-    state: present
-  become: true

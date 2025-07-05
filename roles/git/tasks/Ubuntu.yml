@@ -1,7 +1,0 @@
----
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
-  ansible.builtin.apt:
-    name:
-      - git
-    state: present
-  become: true

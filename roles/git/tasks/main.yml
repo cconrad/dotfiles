@@ -1,49 +1,27 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
-  ansible.builtin.stat:
-    path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
-  register: distribution_config
-
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
-  ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
-  when: distribution_config.stat.exists
-
-- name: "{{ role_name }} | Set core.autocrlf"
+- name: "Git | Set core.autocrlf"
   community.general.git_config:
     name: core.autocrlf
     scope: global
     value: "false"
 
-- name: "{{ role_name }} | Set gpg.format"
+- name: "Git | Set gpg.format"
   community.general.git_config:
     name: gpg.format
     scope: global
     value: ssh
 
-- name: "{{ role_name }} | Add bash alias to copy branch name"
-  ansible.builtin.blockinfile:
-    append_newline: true
-    block: |
-      alias gitcb='git rev-parse --abbrev-ref HEAD | tr -d "\n" | xclip -selection clipboard'
-    create: true
-    insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (git.alias)"
-    mode: "644"
-    path: "{{ ansible_facts.user_dir }}/.bashrc"
-    prepend_newline: true
-  when: "'bash' in default_roles"
-
-- name: "{{ role_name }} | 1Password operations"
+- name: "Git | 1Password operations"
   when: op_installed
   block:
-    - name: "{{ role_name }} | Get item ID for {{ ansible_facts.nodename }}"
+    - name: "Git | Get item ID for {{ ansible_facts.nodename }}"
       ansible.builtin.shell:
         cmd: "op item list --tags ansible/node --format json | jq -r '.[] | select(.title == \"{{ ansible_facts.nodename }}\") | .id'"
       register: git_item_id
       failed_when: false
       changed_when: false
 
-    - name: "{{ role_name }} | Item for {{ ansible_facts.nodename }} exists"
+    - name: "Git | Item for {{ ansible_facts.nodename }} exists"
       when: git_item_id.rc == 0 and git_item_id.stdout != ""
       block:
         - name: "{{ role_name }} | Get user.email"
@@ -59,7 +37,7 @@
           failed_when: false
           register: git_user_email
         
-        - name: "{{ role_name }} | Get user.name"
+        - name: "Git | Get user.name"
           ansible.builtin.command:
             argv:
               - op
@@ -72,7 +50,7 @@
           failed_when: false
           register: git_user_name
 
-        - name: "{{ role_name }} | Get init.defaultBranch"
+        - name: "Git | Get init.defaultBranch"
           ansible.builtin.command:
             argv:
               - op
@@ -85,70 +63,33 @@
           failed_when: false
           register: git_init_defaultBranch
 
-        - name: "{{ role_name }} | Set user.email"
-          community.general.git_config:
-            name: user.email
-            scope: global
-            value: "{{ git_user_email.stdout }}"
-          when: git_user_email.rc == 0
+- name: "Git | Set user.email"
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git.user.email }}"
 
-        - name: "{{ role_name }} | Set user.name"
-          community.general.git_config:
-            name: user.name
-            scope: global
-            value: "{{ git_user_name.stdout }}"
-          when: git_user_name.rc == 0
-    
-        - name: "{{ role_name }} | Ensure environment.d directory exists"
-          ansible.builtin.file:
-            path: "{{ ansible_facts.user_dir }}/.config/environment.d"
-            state: directory
-            mode: "700"
-          when: git_user_name.rc == 0 or git_user_email.rc == 0
-    
-        - name: "{{ role_name }} | Set GIT_AUTHOR_NAME"
-          ansible.builtin.lineinfile:
-            create: true
-            line: 'GIT_AUTHOR_NAME="{{ git_user_name.stdout }}"'
-            mode: "600"
-            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
-            regexp: "GIT_AUTHOR_NAME="
-            state: present
-          when: git_user_name.rc == 0
-          
-        - name: "{{ role_name }} | Set GIT_COMMITTER_NAME"
-          ansible.builtin.lineinfile:
-            create: true
-            line: 'GIT_COMMITTER_NAME="{{ git_user_name.stdout }}"'
-            mode: "600"
-            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
-            regexp: "GIT_COMMITTER_NAME="
-            state: present
-          when: git_user_name.rc == 0
+- name: "Git | Set user.name"
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git.user.name }}"
 
-        - name: "{{ role_name }} | Set GIT_AUTHOR_EMAIL"
-          ansible.builtin.lineinfile:
-            create: true
-            line: 'GIT_AUTHOR_EMAIL="{{ git_user_email.stdout }}"'
-            mode: "600"
-            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
-            regexp: "GIT_AUTHOR_EMAIL="
-            state: present
-          when: git_user_email.rc == 0
+- name: "Git | Set init.defaultBranch"
+  community.general.git_config:
+    name: init.defaultBranch
+    scope: global
+    value: "{{ git_init_defaultBranch.stdout if git_init_defaultBranch is defined and git_init_defaultBranch.rc is defined and git_init_defaultBranch.rc == 0 else 'main' }}"
 
-        - name: "{{ role_name }} | Set GIT_COMMITTER_EMAIL"
-          ansible.builtin.lineinfile:
-            create: true
-            line: 'GIT_COMMITTER_EMAIL="{{ git_user_email.stdout }}"'
-            mode: "600"
-            path: "{{ ansible_facts.user_dir }}/.config/environment.d/20-git.conf"
-            regexp: "GIT_COMMITTER_EMAIL="
-            state: present
-          when: git_user_email.rc == 0
+- name: "Git | Run generic Linux tasks"
+  ansible.builtin.include_tasks: Linux.yml
+  when: ansible_facts.system == "Linux"
 
-        - name: "{{ role_name }} | Set init.defaultBranch"
-          community.general.git_config:
-            name: init.defaultBranch
-            scope: global
-            value: "{{ git_init_defaultBranch.stdout }}"
-          when: git_init_defaultBranch.rc == 0
+- name: "Git | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
+  register: distribution_config
+
+- name: "Git | Run Tasks: {{ ansible_facts.distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
+  when: distribution_config.stat.exists
