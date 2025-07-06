@@ -1,3 +1,4 @@
+## This file is managed by Ansible
 ## DOCS: at https://docs.atuin.sh/configuration/config
 inline_height=25
 style='compact'

@@ -7,3 +7,15 @@
 - name: "Atuin | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
+
+- name: "Atuin | Ensure atuin .config dir exists"
+  ansible.builtin.file:
+    name: "{{ ansible_facts.user_dir }}/.config/atuin"
+    state: directory
+    mode: "0700"
+
+- name: "Atuin | Deploy Config"
+  ansible.builtin.copy:
+    src: config.toml
+    dest: "{{ ansible_facts.user_dir }}/.config/atuin/config.toml"
+    mode: "0600"

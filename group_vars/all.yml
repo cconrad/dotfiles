@@ -1,23 +1,22 @@
 default_roles:
-  # - system
-  # - 1password
-  # - alacritty
-  # - ansible-lint
-  # - asciinema
-  # - atuin
+  - system
+  - 1password
+  - ansible-lint
+  - asciinema
+  - atuin
   # - azure
-  - bash
+  # - bash
   # - bat
   # - btop
   # - chirp
-  - claude-code
-  - claude-desktop
+  # - claude-code
+  # - claude-desktop
   # - devtunnel
   # - edge
   # - fonts
   # - foot
   # - fzf
-  - gemini-cli
+  # - gemini-cli
   # - gh
   # - git
   # - google-cloud
@@ -51,4 +50,4 @@ default_roles:
   # - wireguard
   # - ytdlp
   # - zoxide
-  - zsh
+  # - zsh
