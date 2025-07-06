@@ -10,10 +10,10 @@
   ansible.builtin.blockinfile:
     append_newline: true
     block: |
-      GIT_AUTHOR_NAME="{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git.user.name }}"
-      GIT_COMMITTER_NAME="{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git.user.name }}"
-      GIT_AUTHOR_EMAIL="{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git.user.email }}"
-      GIT_COMMITTER_EMAIL="{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git.user.email }}"
+      GIT_AUTHOR_NAME="{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git_.user.name }}"
+      GIT_COMMITTER_NAME="{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git_.user.name }}"
+      GIT_AUTHOR_EMAIL="{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git_.user.email }}"
+      GIT_COMMITTER_EMAIL="{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git_.user.email }}"
     create: true
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (git.ssh-environment-variables)"

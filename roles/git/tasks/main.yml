@@ -16,15 +16,17 @@
   block:
     - name: "Git | Get item ID for {{ ansible_facts.nodename }}"
       ansible.builtin.shell:
-        cmd: "op item list --tags ansible/node --format json | jq -r '.[] | select(.title == \"{{ ansible_facts.nodename }}\") | .id'"
+        cmd: |
+          set -o pipefail
+          "op item list --tags ansible/node --format json | jq -r '.[] | select(.title == \"{{ ansible_facts.nodename }}\") | .id'"
       register: git_item_id
       failed_when: false
       changed_when: false
 
-    - name: "Git | Item for {{ ansible_facts.nodename }} exists"
+    - name: "Git | Item exists for {{ ansible_facts.nodename }}"
       when: git_item_id.rc == 0 and git_item_id.stdout != ""
       block:
-        - name: "{{ role_name }} | Get user.email"
+        - name: "Git | Get user.email"
           ansible.builtin.command:
             argv:
               - op
@@ -36,7 +38,7 @@
           changed_when: false
           failed_when: false
           register: git_user_email
-        
+
         - name: "Git | Get user.name"
           ansible.builtin.command:
             argv:
@@ -67,13 +69,13 @@
   community.general.git_config:
     name: user.email
     scope: global
-    value: "{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git.user.email }}"
+    value: "{{ git_user_email.stdout if git_user_email is defined and git_user_email.rc is defined and git_user_email.rc == 0 else git_.user.email }}"
 
 - name: "Git | Set user.name"
   community.general.git_config:
     name: user.name
     scope: global
-    value: "{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git.user.name }}"
+    value: "{{ git_user_name.stdout if git_user_name is defined and git_user_name.rc is defined and git_user_name.rc == 0 else git_.user.name }}"
 
 - name: "Git | Set init.defaultBranch"
   community.general.git_config:
