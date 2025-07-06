@@ -1,11 +1,11 @@
 ---
-- name: "{{ role_name }} | Create ~/.config/environment.d"
+- name: "System | Archlinux | Create ~/.config/environment.d"
   ansible.builtin.file:
     mode: "700"
     path: "{{ ansible_facts.user_dir }}/.config/environment.d"
     state: directory
 
-- name: "{{ role_name }} | Set locale"
+- name: "System | Archlinux | Set locale"
   ansible.builtin.lineinfile:
     create: true
     dest: "{{ ansible_facts.user_dir }}/.config/environment.d/10-locale.conf"
@@ -14,7 +14,7 @@
     regexp: "^{{ item.key | upper }}="
   loop: "{{ system.locale | dict2items }}"
 
-- name: "{{ role_name }} | Set keyboard"
+- name: "System | Archlinux | Set keyboard"
   ansible.builtin.lineinfile:
     create: true
     dest: "{{ ansible_facts.user_dir }}/.config/environment.d/11-keyboard.conf"
@@ -23,7 +23,7 @@
     regexp: "^{{ item.key | upper }}="
   loop: "{{ system.keyboard | dict2items }}"
 
-- name: "{{ role_name }} | Configure Electron"
+- name: "System | Archlinux | Configure Electron"
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/electron-flags.conf"
     src: electron-flags.conf
