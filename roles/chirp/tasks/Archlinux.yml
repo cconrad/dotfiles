@@ -1,26 +1,26 @@
 ---
-- name: Get the system's temporary directory
+- name: "Chirp | Archlinux | Get the system's temporary directory"
   ansible.builtin.set_fact:
     temp_dir: "{{ ansible_facts.env.TMPDIR | default('/tmp') }}"
 
-- name: Copy script for discovering current download URL
+- name: "Chirp | Archlinux | Copy script for discovering current download URL"
   ansible.builtin.copy:
     dest: "{{ temp_dir }}/chirp-next-url.sh"
     group: root
-    mode: "777"
+    mode: "0777"
     owner: root
     src: get-chirp-url.sh
   changed_when: false
   become: true
 
-- name: Run script to discover current download URL
+- name: "Chirp | Archlinux | Run script to discover current download URL"
   ansible.builtin.shell:
     cmd: "{{ temp_dir }}/chirp-next-url.sh"
   changed_when: false
   ignore_errors: true
   register: chirp_next_url
 
-- name: Download the latest version of CHIRP
+- name: "Chirp | Archlinux | Download the latest version"
   ansible.builtin.get_url:
     dest: "{{ temp_dir }}/chirp-py3-none-any.whl"
     mode: 0644
@@ -28,22 +28,22 @@
   changed_when: false
   when: chirp_next_url.rc == 0
 
-- name: Install chirp-next for the regular user
+- name: "Chirp | Archlinux | Install chirp-next for the regular user"
   ansible.builtin.pip:
     extra_args: --user
     name: "file://{{ temp_dir }}/chirp-py3-none-any.whl"
   become: true
-  become_user: claus # TODO Make configurable
+  become_user: "{{ ansible_facts.user_id }}"
   when: chirp_next_url.rc == 0
 
-- name: Delete the whl
+- name: "Chirp | Archlinux | Delete the whl"
   ansible.builtin.file:
     path: "{{ temp_dir }}/chirp.whl"
     state: absent
   changed_when: false
   when: chirp_next_url.rc == 0
 
-- name: Delete script for discovering current download URL
+- name: "Chirp | Archlinux | Delete script for discovering current download URL"
   ansible.builtin.file:
     path: "{{ temp_dir }}/chirp-next-url.sh"
     state: absent
