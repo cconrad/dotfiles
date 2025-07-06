@@ -1,4 +1,56 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Update Homebrew"
+- name: "System | macOS | Update Homebrew"
   community.general.homebrew:
     update_homebrew: true
+
+- name: "System | macOS - bash | Add alias to update software"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias update="brew update && brew upgrade"
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (system.update-alias)"
+    mode: "600"
+    path: "{{ ansible_facts.user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
+
+- name: "System | macOS - zsh | Add alias to update software"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias update="brew update && brew upgrade"
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (system.update-alias)"
+    mode: "600"
+    path: "{{ ansible_facts.user_dir }}/.zshrc"
+    prepend_newline: true
+  when: "'zsh' in default_roles"
+
+- name: "System | macOS - bash | Configure Homebrew auto cleanup"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      export HOMEBREW_INSTALL_CLEANUP=1
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (system.brew-auto-cleanup)"
+    mode: "600"
+    path: "{{ ansible_facts.user_dir }}/.bashrc"
+    prepend_newline: true
+  when: "'bash' in default_roles"
+
+- name: "System | macOS - zsh | Configure Homebrew auto cleanup"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      export HOMEBREW_INSTALL_CLEANUP=1
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (system.brew-auto-cleanup)"
+    mode: "600"
+    path: "{{ ansible_facts.user_dir }}/.zshrc"
+    prepend_newline: true
+  when: "'zsh' in default_roles"
