@@ -26,8 +26,7 @@ default_roles:
   - kanshi
   - kitty
   - lazygit
-  # - libreoffice
-  # - lsd
+  - lsd
   # - mc
   # - mullvad
   # - ncdu
