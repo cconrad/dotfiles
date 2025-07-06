@@ -1,8 +1,12 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install powerline-fonts"
+- name: "Fonts | Fedora | Install"
   ansible.builtin.dnf:
     name:
       - powerline-fonts
     state: present
   become: true
 
+- name: "Fonts | Fedora | Include Nerd fonts"
+  ansible.builtin.include_tasks:
+    file: linux-nerdfont.yml
+  loop: "{{ fonts_.nerdfonts }}"

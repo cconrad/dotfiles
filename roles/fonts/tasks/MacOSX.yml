@@ -1,5 +1,8 @@
 ---
-- name: "Fonts | MacOSX | Install"
+- name: "Fonts | macOS | Install"
   community.general.homebrew:
-    name: font-powerline-symbols
+    name:
+      - font-fira-code-nerd-font
+      - font-jetbrains-mono-nerd-font
+      - font-powerline-symbols
     state: present

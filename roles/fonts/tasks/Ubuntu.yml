@@ -1,7 +1,12 @@
 ---
-- name: "Fonts | {{ ansible_facts.distribution }} | Install"
+- name: "Fonts | Ubuntu | Install"
   ansible.builtin.apt:
     name:
       - fonts-powerline
     state: present
   become: true
+
+- name: "Fonts | Ubuntu | Include Nerd fonts"
+  ansible.builtin.include_tasks:
+    file: linux-nerdfont.yml
+  loop: "{{ fonts_.nerdfonts }}"
