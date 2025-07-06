@@ -1,0 +1,6 @@
+---
+- name: "Claude Code | Install"
+  ansible.builtin.npm:
+    name: "@anthropic-ai/claude-code"
+    global: true
+    production: true

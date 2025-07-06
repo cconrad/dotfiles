@@ -5,6 +5,4 @@
     state: present
 
 - name: "Claude Code | macOS | Install"
-  ansible.builtin.npm:
-    name: "@anthropic-ai/claude-code"
-    global: yes
+  ansible.builtin.include_tasks: npm.yml
