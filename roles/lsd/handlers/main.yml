@@ -4,4 +4,3 @@
     path: "/tmp/{{ lsd_file }}.deb"
     state: absent
   become: true
-

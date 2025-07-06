@@ -1,6 +1,9 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: "Lsd | Fedora | Install"
   ansible.builtin.dnf:
     name: lsd
     state: present
   become: true
+
+- name: "Lsd | Fedora | Create alias"
+  ansible.builtin.include_tasks: alias.yml

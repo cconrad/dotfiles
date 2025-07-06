@@ -1,64 +1,56 @@
 ---
-- name: "{{ role_name }} | Download Latest Version JSON"
+- name: "Lsd | Ubuntu | Download Latest Version JSON"
   ansible.builtin.uri:
     url: https://api.github.com/repos/lsd-rs/lsd/releases/latest
   register: lsd_latest_version_json
   changed_when: false
 
-- name: "{{ role_name }} | Registering LSD Latest Release"
+- name: "Lsd | Ubuntu | Registering LSD Latest Release"
   ansible.builtin.set_fact:
     lsd_latest_release: "{{ lsd_latest_version_json.json.tag_name }}"
 
-- name: "{{ role_name }} | Registering LSD Latest Version"
+- name: "Lsd | Ubuntu | Registering LSD Latest Version"
   ansible.builtin.set_fact:
     lsd_latest_version: "{{ lsd_latest_release.stdout | default('') }}"
 
-- name: "{{ role_name }} | Getting version information"
+- name: "Lsd | Ubuntu | Getting version information"
   ansible.builtin.command:
     cmd: lsd --version
   register: current_lsd_version
   changed_when: false
   failed_when: false
 
-- name: "{{ role_name }} | Edit current_lsd_version"
+- name: "Lsd | Ubuntu | Edit current_lsd_version"
   ansible.builtin.set_fact:
     current_lsd_version: "{{ current_lsd_version.stdout.split(' ')[-1] | default('') }}"
 
-- name: "{{ role_name }} | Show current_lsd_version debug"
-  ansible.builtin.debug:
-    var: current_lsd_version
-
-- name: "{{ role_name }} | Show lsd_latest_release debug"
-  ansible.builtin.debug:
-    var: lsd_latest_release
-
-- name: "{{ role_name }} | Install"
+- name: "Lsd | Ubuntu | Install"
   when: lsd_latest_release | regex_replace('^.', '') not in current_lsd_version|default('')
   block:
-    - name: "{{ role_name }} | Go-Lang | Define GOARCH"
+    - name: "Lsd | Ubuntu | Define GOARCH"
       ansible.builtin.set_fact:
         lsdarch: "{{ ansible_facts.machine | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }}"
 
-    - name: "{{ role_name }} | Define lsd_file"
+    - name: "Lsd | Ubuntu | Define lsd_file"
       ansible.builtin.set_fact:
         lsd_file: "lsd_{{ lsd_latest_release | replace('v', '') }}_{{ lsdarch }}"
 
-    - name: "{{ role_name }} | Ensure clean download destination"
+    - name: "Lsd | Ubuntu | Ensure clean download destination"
       ansible.builtin.file:
         path: "/tmp/{{ lsd_file }}.deb"
         state: absent
       become: true
 
-    - name: "{{ role_name }} | Downloading LSD Release"
+    - name: "Lsd | Ubuntu | Downloading LSD Release"
       ansible.builtin.get_url:
         url: "https://github.com/lsd-rs/lsd/releases/download/{{ lsd_latest_release }}/{{ lsd_file }}.deb"
         dest: /tmp/
-        mode: "0644"
+        mode: "600"
         force: true
       notify:
         - Cleanup LSD downloaded tar
 
-    - name: "{{ role_name }} | Install"
+    - name: "Lsd | Ubuntu | Install"
       ansible.builtin.apt:
         deb: "/tmp/{{ lsd_file }}.deb"
         state: present
