@@ -1,5 +1,5 @@
 ---
-system:
+system_:
   keyboard:
     xkb_default_layout: dk
     xkb_default_model: pc105
