@@ -10,4 +10,3 @@
     path: /tmp/lazygit
     state: absent
   become: true
-

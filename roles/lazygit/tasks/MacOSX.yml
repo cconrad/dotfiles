@@ -1,5 +1,5 @@
 ---
-- name: "Lazygit | MacOSX | Install lazygit"
+- name: "Lazygit | macOS | Install"
   community.general.homebrew:
     name: lazygit
     state: present
