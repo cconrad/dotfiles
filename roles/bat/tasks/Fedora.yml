@@ -1,6 +1,9 @@
 ---
-- name: "Bat | {{ ansible_facts.distribution }} | Install bat"
+- name: "Bat | Fedora | Install"
   ansible.builtin.dnf:
     name: bat
     state: present
   become: true
+
+- name: "Bat | Fedora | Create alias"
+  ansible.builtin.include_tasks: alias.yml

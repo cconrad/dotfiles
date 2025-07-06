@@ -6,7 +6,7 @@ default_roles:
   - atuin
   - azure
   - bash
-  # - bat
+  - bat
   # - btop
   # - chirp
   # - claude-code
@@ -50,4 +50,4 @@ default_roles:
   # - wireguard
   # - ytdlp
   # - zoxide
-  # - zsh
+  - zsh
