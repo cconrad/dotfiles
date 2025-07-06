@@ -11,6 +11,7 @@ default_roles:
   - chirp
   - claude-code
   - claude-desktop
+  - code
   # - devtunnel
   # - edge
   # - fonts

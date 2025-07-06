@@ -1,5 +1,5 @@
 ---
-- name: "Code | MacOSX | Install Visual Studio Code"
+- name: "Visual Studio Code | macOS | Install"
   community.general.homebrew_cask:
     name: visual-studio-code
     state: present

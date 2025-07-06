@@ -1,19 +1,35 @@
 ---
 code:
   extensions:
-    - Catppuccin.catppuccin-vsc
+    - anthropic.claude-code
+    - augment.vscode-augment
     - bmewburn.vscode-intelephense-client
+    - Catppuccin.catppuccin-vsc
+    - charliermarsh.ruff
     - eamodio.gitlens
     - esbenp.prettier-vscode
+    - github.codespaces
     - github.copilot
     - github.copilot-chat
+    - github.github-vscode-theme
+    - github.vscode-pull-request-github
+    - google.geminicodeassist
     - humao.rest-client
     - mhutchie.git-graph
-    - ms-vscode.remote-explorer
+    - ms-azuretools.vscode-azure-github-copilot
+    - ms-azuretools.vscode-azureresourcegroups
+    - ms-azuretools.vscode-containers
+    - ms-azuretools.vscode-cosmosdb
+    - ms-ossdata.vscode-pgsql
+    - ms-python.debugpy
+    - ms-python.python
+    - ms-python.vscode-pylance
+    - ms-vscode-remote.remote-containers
     - ms-vscode-remote.remote-ssh
     - ms-vscode-remote.remote-ssh-edit
-    - ms-python.python
-    - ms-python.black-formatter
-    - rangav.vscode-thunder-client
+    - ms-vscode.remote-explorer
+    - ms-vscode.vscode-github-issue-notebooks
     - redhat.ansible
+    - redhat.vscode-xml
     - timonwong.shellcheck
+    - wholroyd.jinja
