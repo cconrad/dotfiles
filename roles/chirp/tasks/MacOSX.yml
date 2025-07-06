@@ -1,5 +1,5 @@
 ---
-- name: "CHIRP | MacOSX | Install CHIRP"
+- name: "Chirp | macOS | Install"
   community.general.homebrew_cask:
     name: chirp
     state: present
