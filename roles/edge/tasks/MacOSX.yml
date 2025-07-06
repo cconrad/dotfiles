@@ -1,5 +1,5 @@
 ---
-- name: "Edge | MacOSX | Install Microsoft Edge"
+- name: "Microsoft Edge | macOS | Install"
   community.general.homebrew_cask:
     name: microsoft-edge
     state: present

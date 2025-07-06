@@ -1,5 +1,5 @@
 ---
-edge:
+edge_:
   profiles:
     - name: personal
       friendly_name: Personal
