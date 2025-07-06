@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: "Kitty | macOS | Install"
   community.general.homebrew_cask:
     name: kitty
     state: present
