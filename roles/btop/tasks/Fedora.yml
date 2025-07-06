@@ -1,6 +1,9 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: "Btop | Fedora | Install"
   ansible.builtin.dnf:
     name: btop
     state: present
   become: true
+
+- name: "Btop | Fedora | Create alias"
+  ansible.builtin.include_tasks: alias.yml

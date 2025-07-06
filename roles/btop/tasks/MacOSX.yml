@@ -1,5 +1,8 @@
 ---
-- name: "btop | MacOSX | Install btop"
+- name: "Btop | macOS | Install"
   community.general.homebrew:
     name: btop
     state: present
+
+- name: "Btop | macOS | Create alias"
+  ansible.builtin.include_tasks: alias.yml

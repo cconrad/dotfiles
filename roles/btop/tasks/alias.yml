@@ -1,0 +1,19 @@
+---
+- name: "Btop | Create alias"
+  ansible.builtin.blockinfile:
+    append_newline: true
+    block: |
+      alias top='btop'
+      alias htop='btop'
+    create: true
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (btop.alias)"
+    mode: "0600"
+    path: "{{ item.path }}"
+    prepend_newline: true
+  when: item.role in default_roles
+  loop:
+    - role: bash
+      path: "{{ ansible_facts.user_dir }}/.bashrc"
+    - role: zsh
+      path: "{{ ansible_facts.user_dir }}/.zshrc"

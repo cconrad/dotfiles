@@ -1,5 +1,8 @@
-- name: "BTOP | Install"
+- name: "Btop | Ubuntu | Install"
   ansible.builtin.apt:
     name: bpytop
     state: present
   become: true
+
+- name: "Btop | Ubuntu | Create alias"
+  ansible.builtin.include_tasks: alias.yml
