@@ -18,7 +18,7 @@ default_roles:
   - fonts
   - fzf
   - gemini-cli
-  # - gh
+  - gh
   # - git
   - google-chrome
   # - google-cloud
