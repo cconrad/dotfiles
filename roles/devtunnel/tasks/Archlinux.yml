@@ -1,12 +1,13 @@
 ---
-- name: "{{ role_name }} | Create bin directory"
+- name: "Devtunnel | Archlinux | Create bin directory"
   ansible.builtin.file:
-    mode: "700"
+    mode: "0700"
     path: "{{ ansible_facts.user_dir }}/.local/bin"
     state: directory 
 
-- name: "{{ role_name }} | Install"
+- name: "Devtunnel | Archlinux | Install"
   ansible.builtin.get_url:
     dest: "{{ ansible_facts.user_dir }}/.local/bin/devtunnel"
-    mode: "700"
+    force: false
+    mode: "0700"
     url: https://aka.ms/TunnelsCliDownload/linux-x64
