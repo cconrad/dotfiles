@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | Install"
-  community.general.homebrew:
+- name: "Google Cloud CLI | macOS | Install"
+  community.general.homebrew_cask:
     name: google-cloud-sdk
     state: present
