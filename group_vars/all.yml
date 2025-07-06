@@ -12,7 +12,7 @@ default_roles:
   - claude-code
   - claude-desktop
   - code
-  # - devtunnel
+  - devtunnel
   # - edge
   # - fonts
   # - foot
