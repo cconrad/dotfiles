@@ -1,5 +1,5 @@
 ---
-- name: "Brave | MacOSX | Install brave"
+- name: "Brave | macOS | Install"
   community.general.homebrew_cask:
     name: brave-browser
     state: present
