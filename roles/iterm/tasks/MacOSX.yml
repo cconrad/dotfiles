@@ -1,0 +1,5 @@
+---
+- name: "ITerm | macOS | Install"
+  community.general.homebrew_cask:
+    name: iterm2
+    state: present

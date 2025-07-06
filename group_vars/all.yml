@@ -15,14 +15,14 @@ default_roles:
   - devtunnel
   - discord
   - edge
-  # - fonts
-  # - foot
+  - fonts
   # - fzf
   # - gemini-cli
   # - gh
   # - git
   - google-chrome
   # - google-cloud
+  - iterm
   # - kanshi
   # - libreoffice
   # - lsd
