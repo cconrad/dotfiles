@@ -1,5 +1,5 @@
 ---
-- name: "Azure | MacOSX | Install azure-cli"
+- name: "Azure CLI | macOS | Install"
   community.general.homebrew:
     name: azure-cli
     state: present
