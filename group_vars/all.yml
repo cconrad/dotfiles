@@ -24,6 +24,7 @@ default_roles:
   - google-cloud
   - iterm
   - kanshi
+  - kitty
   # - libreoffice
   # - lsd
   # - mc
