@@ -1,5 +1,5 @@
 ---
-- name: "GH | MacOSX | Install gh"
+- name: "GitHub CLI | macOS | Install"
   community.general.homebrew:
     name: gh
     state: present
