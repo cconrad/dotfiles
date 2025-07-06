@@ -1,27 +1,25 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "1Password | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "1Password | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Ensure config dir exists"
-  ansible.builtin.file:
-    path: "{{ ansible_facts.user_dir }}/.config"
-    state: directory
-    mode: 0700
-
-- name: "{{ role_name }} | Ensure ssh 1Password config dir exists"
+- name: "1Password | Ensure ssh config dir exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/1Password/ssh"
     state: directory
-    mode: 0700
+    mode: "0700"
 
-- name: "{{ role_name }} | Deploy ssh-agent config"
+- name: "1Password | Deploy ssh-agent config"
   ansible.builtin.copy:
     src: agent.toml
     dest: "{{ ansible_facts.user_dir }}/.config/1Password/ssh/agent.toml"
-    mode: 0644
+    mode: "0600"
+
+- name: "1Password | Linux | Include generic tasks"
+  ansible.builtin.include_tasks: "linux.yml"
+  when: ansible_facts.os_family == "Linux"

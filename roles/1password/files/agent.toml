@@ -1,4 +1,4 @@
-# This file is managed by ansible
+# This file is managed by Ansible
  
 [[ssh-keys]]
 vault = "Private"
