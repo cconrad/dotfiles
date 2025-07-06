@@ -13,6 +13,7 @@ default_roles:
   - claude-desktop
   - code
   - devtunnel
+  - discord
   # - edge
   # - fonts
   # - foot
