@@ -1,5 +1,11 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Check installation status"
+- name: "Starship | Fedora | Ensure target directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_facts.user_dir }}/.local/bin"
+    state: directory
+    mode: "700"
+
+- name: "Starship | Fedora | Check installation status"
   ansible.builtin.command:
     cmd: "command -v starship"
   changed_when: false
@@ -7,15 +13,7 @@
   register: starship_exists
   failed_when: false
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install starship"
-  block:
-    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Ensure target directory exists"
-      ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.local/bin"
-        state: directory
-        mode: "0755"
-
-    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
-      ansible.builtin.shell:
-        cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_facts.user_dir }}/.local/bin"
+- name: "Starship | Fedora | Install"
+  ansible.builtin.shell:
+    cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_facts.user_dir }}/.local/bin"
   when: starship_exists.rc != 0

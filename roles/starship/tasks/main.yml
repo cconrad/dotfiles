@@ -1,34 +1,39 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "Starship | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "Starship | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Ensure .config directory exists"
+- name: "Starship | Ensure .config directory exists"
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config"
     state: directory
     mode: "0755"
 
-- name: "{{ role_name }} | Copy custom starship config"
+- name: "Starship | Copy config"
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/starship.toml"
     src: "starship.toml"
     mode: "0644"
 
-- name: "{{ role_name }} | Enable in bash"
+- name: "Starship | Enable"
   ansible.builtin.blockinfile:
     append_newline: true
     block: |
-      eval "$(starship init bash)"
+      eval "$(starship init {{ item.role }})"
     create: true
     insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK (starship.init)"
-    mode: "644"
-    path: "{{ ansible_facts.user_dir }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (starship.enable)"
+    mode: "600"
+    path: "{{ item.path }}"
     prepend_newline: true
-  when: "'bash' in default_roles"
+  when: item.role in default_roles
+  loop:
+    - role: bash
+      path: "{{ ansible_facts.user_dir }}/.bashrc"
+    - role: zsh
+      path: "{{ ansible_facts.user_dir }}/.zshrc"
