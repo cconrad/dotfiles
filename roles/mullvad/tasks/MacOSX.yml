@@ -1,5 +1,5 @@
 ---
-- name: "Mullvad | MacOSX | Install Mullvad VPN"
+- name: "Mullvad | macOS | Install"
   community.general.homebrew_cask:
     name: mullvad-vpn
     state: present
