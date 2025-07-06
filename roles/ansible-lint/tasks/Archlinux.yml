@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: "Ansible-lint | Archlinux | Install"
   ansible.builtin.package:
     name: ansible-lint
   become: true
