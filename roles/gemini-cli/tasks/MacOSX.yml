@@ -4,7 +4,3 @@
     name: node
     state: present
 
-- name: "Gemini CLI | macOS | Install"
-  ansible.builtin.npm:
-    name: "@google/gemini-cli"
-    global: yes

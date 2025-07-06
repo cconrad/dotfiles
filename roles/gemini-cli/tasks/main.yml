@@ -7,3 +7,19 @@
 - name: "Gemini CLI | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
+
+- name: "Gemini CLI | Check for npm dependency"
+  ansible.builtin.command:
+    argv:
+      - command
+      - -v
+      - npm
+  register: npm_check
+  failed_when: false
+  changed_when: false
+
+- name: "Gemini CLI | Install"
+  community.general.npm:
+    name: "@google/gemini-cli"
+    global: true
+  when: npm_check.rc == 0
