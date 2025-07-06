@@ -65,7 +65,7 @@
           - install
           - github/gh-copilot
       changed_when: false
-      environment: 
+      environment:
         GH_TOKEN: "{{ gh_op_token.stdout }}"
 
 - name: "GitHub CLI | Add aliases"

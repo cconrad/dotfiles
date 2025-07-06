@@ -7,7 +7,7 @@
     file: gh-cli
     gpgcheck: true
     gpgkey: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x23F3D4EA75716059
-    mode: "644"
+    mode: "0644"
     name: gh-cli
     sslverify: true
   become: true
