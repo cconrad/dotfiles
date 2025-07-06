@@ -19,9 +19,9 @@ default_roles:
   - fzf
   - gemini-cli
   - gh
-  # - git
+  - git
   - google-chrome
-  # - google-cloud
+  - google-cloud
   - iterm
   # - kanshi
   # - libreoffice
