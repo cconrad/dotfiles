@@ -81,7 +81,7 @@
     scope: global
     value: "{{ git_init_defaultBranch.stdout if git_init_defaultBranch is defined and git_init_defaultBranch.rc is defined and git_init_defaultBranch.rc == 0 else 'main' }}"
 
-- name: "Git | Run generic Linux tasks"
+- name: "Git | Linux | Run tasks"
   ansible.builtin.include_tasks: Linux.yml
   when: ansible_facts.system == "Linux"
 
