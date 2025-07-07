@@ -42,7 +42,7 @@ default_roles:
   - python
   - qbittorrent
   - raycast
-  # - rclone
+  - rclone
   # - ripgrep
   # - rofi
   # - rsync
