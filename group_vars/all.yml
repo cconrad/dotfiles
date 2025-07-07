@@ -53,5 +53,5 @@ default_roles:
   # - vlc
   # - wireguard
   # - ytdlp
-  # - zoxide
+  - zoxide
   - zsh
