@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Podman | RedHat | Install
   ansible.builtin.package:
     name:
       - buildah

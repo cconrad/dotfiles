@@ -1,12 +1,13 @@
 ---
-- name: "{{ role_name }} | Extract server item title and alias"
+- name: SSH | Extract server item title and alias
   ansible.builtin.shell: |
+    set -o pipefail
     op item get "{{ item }}" --format=json \
       | jq '{title: .title, alias: (.fields[] | select(.label == "alias") | .value), user: (.fields[] | select(.label == "user") | .value)}'
   changed_when: false
   register: op_server_item
 
-- name: "{{ role_name }} | Add server item to list"
+- name: SSH | Add server item to list
   ansible.builtin.set_fact:
     server_items_with_alias: "{{ server_items_with_alias + [op_server_item.stdout | from_json] }}"
   when: op_server_item.stdout != ""

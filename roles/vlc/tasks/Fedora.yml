@@ -1,18 +1,18 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add RPM Fusion key (free)"
+- name: VLC | Fedora | Add RPM Fusion key (free)
   ansible.builtin.rpm_key:
     fingerprint: E9A4 91A3 DE24 7814 E7E0 67EA E06F 8ECD D651 FF2E
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Enable the RPM Fusion (free) repo"
+- name: VLC | Fedora | Enable the RPM Fusion (free) repo
   ansible.builtin.dnf:
     name:
       - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts.distribution_version.split('.')[0] }}.noarch.rpm"
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: VLC | Fedora | Install
   ansible.builtin.dnf:
     name:
       - vlc

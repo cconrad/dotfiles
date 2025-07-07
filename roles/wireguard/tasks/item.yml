@@ -1,16 +1,17 @@
 ---
-- name: "{{ role_name }} | Get item by ID"
+- name: WireGuard | Get item by ID
   ansible.builtin.shell:
     cmd: |
+      set -o pipefail
       op item get {{ item }} --format json \
         | jq '{ "title": .title, "keyfile": (.fields[] | select(.label == "notesPlain").value) }'
   changed_when: false
   register: networkmanager_parsed_item
 
-- name: "{{ role_name }} | With items representing nmconnections"
+- name: WireGuard | With items representing nmconnections
   when: networkmanager_parsed_item.stdout != ""
   block:
-    - name: "{{ role_name }} | Create keyfile"
+    - name: WireGuard | Create keyfile
       ansible.builtin.copy:
         content: "{{ (networkmanager_parsed_item.stdout | from_json).keyfile }}"
         dest: "/etc/NetworkManager/system-connections/{{ (networkmanager_parsed_item.stdout | from_json).title }}.nmconnection"

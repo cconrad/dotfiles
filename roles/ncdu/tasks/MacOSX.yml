@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | MacOSX | Install ncdu"
+- name: Ncdu | macOS | Install
   community.general.homebrew:
     name: ncdu
     state: present

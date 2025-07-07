@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Vim | Fedora | Install
   ansible.builtin.dnf:
     name:
       - vim-enhanced

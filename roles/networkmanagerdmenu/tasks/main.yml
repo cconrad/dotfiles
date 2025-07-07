@@ -1,20 +1,20 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "NetworkManager dmenu | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "NetworkManager dmenu | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Create bin directory"
+- name: NetworkManager dmenu | Create bin directory
   ansible.builtin.file:
     mode: "700"
     path: "{{ ansible_facts.user_dir }}/.local/bin"
     state: directory
 
-- name: "{{ role_name }} | Install"
+- name: NetworkManager dmenu | Install
   ansible.builtin.unarchive:
     creates: "{{ ansible_facts.user_dir }}/.local/bin/networkmanager-dmenu-2.5.0/networkmanager_dmenu"
     dest: "{{ ansible_facts.user_dir }}/.local/bin"
@@ -23,14 +23,14 @@
     remote_src: true
     src: https://github.com/firecat53/networkmanager-dmenu/archive/refs/tags/v2.5.0.tar.gz
 
-- name: "{{ role_name }} | Create config directory"
+- name: NetworkManager dmenu | Create config directory
   ansible.builtin.file:
-    mode: "700"
+    mode: "0700"
     path: "{{ ansible_facts.user_dir }}/.config/networkmanager-dmenu"
     state: directory
 
-- name: "{{ role_name }} | Configure"
+- name: NetworkManager dmenu | Configure
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/networkmanager-dmenu/config.ini"
-    mode: "644"
+    mode: "0600"
     src: config.ini

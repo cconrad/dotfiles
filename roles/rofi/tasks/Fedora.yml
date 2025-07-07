@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Rofi | Fedora | Install
   ansible.builtin.dnf:
     name:
       - rofi-wayland

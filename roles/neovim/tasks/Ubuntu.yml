@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Dependencies"
+- name: Neovim | Ubuntu | Install dependencies
   ansible.builtin.apt:
     name:
       - cmake
@@ -12,9 +12,9 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Neovim | Ubuntu | Install
   ansible.builtin.apt_repository:
-    mode: "644"
+    mode: "0644"
     repo: ppa:neovim-ppa/unstable
     state: present
   become: true

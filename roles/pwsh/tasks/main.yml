@@ -1,21 +1,21 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "PowerShell | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "PowerShell | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Ensure Powershell profile directory exists"
+- name: PowerShell | Ensure Powershell profile directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/powershell"
     state: directory
-    mode: "0755"
+    mode: "0700"
 
-- name: "{{ role_name }} | Deploy Powershell profile"
+- name: PowerShell | Deploy Powershell profile
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/powershell/profile.ps1"
     src: "profile.ps1"
-    mode: "0644"
+    mode: "0600"

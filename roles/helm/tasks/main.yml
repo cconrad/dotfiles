@@ -1,14 +1,14 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "Helm | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "Helm | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: Helm | Add Helm Repos
+- name: Helm | Add repositories
   kubernetes.core.helm_repository:
     name: "{{ item.name }}"
     url: "{{ item.url }}"

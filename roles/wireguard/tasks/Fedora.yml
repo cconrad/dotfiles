@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: WireGuard | Fedora | Install
   ansible.builtin.dnf:
     name:
       - NetworkManager
@@ -7,15 +7,15 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | 1Password operations"
+- name: WireGuard | Fedora | 1Password operations
   block:
-    - name: "{{ role_name }} | List nmconnections"
+    - name: WireGuard | Fedora | List nmconnections
       ansible.builtin.shell:
         cmd: "op item list --tags ansible/nmconnection --format json | jq -r '.[].id'"
       changed_when: false
       register: networkmanager_1password_ids_tagged_ansible
-    
-    - name: "{{ role_name }} | Item operations"
+
+    - name: WireGuard | Fedora | Item operations
       ansible.builtin.include_tasks:
         file: item.yml
       loop: "{{ networkmanager_1password_ids_tagged_ansible.stdout_lines }}"

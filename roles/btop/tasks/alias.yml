@@ -1,5 +1,5 @@
 ---
-- name: "Btop | Create alias"
+- name: Btop | Create alias
   ansible.builtin.blockinfile:
     append_newline: true
     block: |

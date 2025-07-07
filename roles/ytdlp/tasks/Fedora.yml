@@ -1,18 +1,18 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Add RPM Fusion key (free)"
+- name: Yt-dlp | Fedora | Add RPM Fusion key (free)
   ansible.builtin.rpm_key:
     fingerprint: E9A4 91A3 DE24 7814 E7E0 67EA E06F 8ECD D651 FF2E
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Enable the RPM Fusion (free) repo"
+- name: Yt-dlp | Fedora | Enable the RPM Fusion (free) repo
   ansible.builtin.dnf:
     name:
       - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts.distribution_version.split('.')[0] }}.noarch.rpm"
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install dependencies"
+- name: Yt-dlp | Fedora | Install dependencies
   ansible.builtin.dnf:
     name:
       - ffmpeg
@@ -20,7 +20,7 @@
     state: present
   become: true
 
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Check whether the Fedora Cisco OpenH264 repository is enabled"
+- name: Yt-dlp | Fedora | Check whether the Cisco OpenH264 repository is enabled
   ansible.builtin.shell:
     cmd: dnf repo list | grep fedora-cisco-openh264
   changed_when: false
@@ -28,14 +28,14 @@
   register: yt_dlp_fedora_cisco_openh264
 
 - block:
-    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Enable dnf config-manager"
+    - name: Yt-dlp | Fedora | Enable dnf config-manager
       ansible.builtin.dnf:
         name:
           - dnf-plugins-core
         state: present
       become: true
 
-    - name: "{{ role_name }} | {{ ansible_facts.distribution }} | Enable the Fedora Cisco OpenH264 repository"
+    - name: Yt-dlp | Fedora | Enable the Cisco OpenH264 repository
       ansible.builtin.command:
         argv:
           - dnf

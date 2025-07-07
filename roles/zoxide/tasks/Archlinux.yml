@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install Zoxide"
+- name: Zoxide | Archlinux | Install
   community.general.pacman:
     name: zoxide
     state: present

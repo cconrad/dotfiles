@@ -1,25 +1,26 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "Neovim | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "Neovim | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name }} | Create config directory"
+- name: Neovim | Create config directory
   ansible.builtin.file:
-    mode: "755"
+    mode: "0700"
     path: "{{ ansible_facts.user_dir }}/.config"
     state: directory
 
-- name: "{{ role_name }} } | Configure"
+- name: Neovim | Configure
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config"
     src: nvim
+    mode: "0600"
 
-- name: "{{ role_name }} | Create bash alias"
+- name: Neovim | Create alias
   ansible.builtin.blockinfile:
     append_newline: true
     block: |
@@ -28,7 +29,12 @@
     create: true
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK (neovim.alias)"
-    mode: "644"
-    path: "{{ ansible_facts.user_dir }}/.bashrc"
+    mode: "0600"
+    path: "{{ item.path }}"
     prepend_newline: true
-  when: "'bash' in default_roles"
+  when: item.role in default_roles
+  loop:
+    - role: bash
+      path: "{{ ansible_facts.user_dir }}/.bashrc"
+    - role: zsh
+      path: "{{ ansible_facts.user_dir }}/.zshrc"

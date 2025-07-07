@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Neovim | Archlinux | Install
   kewlfft.aur.aur:
     name: neovim-git
     state: present

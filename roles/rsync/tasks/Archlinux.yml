@@ -1,5 +1,5 @@
 ---
-- name: "{{ role_name }} | {{ ansible_facts.distribution }} | Install"
+- name: Rsync | Archlinux | Install
   ansible.builtin.pacman:
     name: rsync
     state: present

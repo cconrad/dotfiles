@@ -1,25 +1,26 @@
 ---
-- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_facts.distribution }}"
+- name: "Sway | Checking for Distribution Config: {{ ansible_facts.distribution }}"
   ansible.builtin.stat:
     path: "{{ role_path }}/tasks/{{ ansible_facts.distribution }}.yml"
   register: distribution_config
 
-- name: "{{ role_name }} | Run Tasks: {{ ansible_facts.distribution }}"
+- name: "Sway | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: "{{ role_name}} | Create config directory"
+- name: Sway | Create config directory
   ansible.builtin.file:
     path: "{{ ansible_facts.user_dir }}/.config/sway"
     mode: "700"
     state: directory
 
-- name: "{{ role_name}} | Override default configs"
+- name: Sway | Override default configs
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/sway"
     src: config.d
+    mode: "644"
 
-- name: "{{ role_name}} | Configure"
+- name: Sway | Configure
   ansible.builtin.copy:
     dest: "{{ ansible_facts.user_dir }}/.config/sway/config"
     mode: "644"
