@@ -1,0 +1,5 @@
+---
+- name: Podman Desktop | macOS | Install
+  community.general.homebrew_cask:
+    name: podman-desktop
+    state: present
