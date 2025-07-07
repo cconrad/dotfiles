@@ -1,5 +1,5 @@
 ---
-- name: "NPM | MacOSX | Install npm"
+- name: Npm | macOS | Install
   community.general.homebrew:
-    name: npm
+    name: node
     state: present
