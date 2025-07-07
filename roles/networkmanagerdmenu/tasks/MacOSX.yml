@@ -1,6 +1,0 @@
----
-# NetworkManager dmenu is a Linux network management tool and is not available on macOS
-# macOS has built-in network management through System Preferences/Settings
-- name: "NetworkManagerDmenu | MacOSX | Not applicable"
-  ansible.builtin.debug:
-    msg: "NetworkManager dmenu is not available on macOS"

@@ -1,5 +1,5 @@
 ---
-- name: NetworkManager dmenu | Fedora | Install
+- name: Networkmanager-dmenu | Fedora | Install dependencies
   ansible.builtin.dnf:
     name:
       - libnotify
@@ -10,3 +10,6 @@
       - rofi-wayland
     state: present
   become: true
+
+- name: Networkmanager-dmenu | Fedora | Install
+  ansible.builtin.include_tasks: linux.yml
