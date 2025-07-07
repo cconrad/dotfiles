@@ -1,9 +1,9 @@
 ---
-- name: Obsidian | Detect if Desktop Environment"
+- name: Obsidian | Ubuntu | Detect if Desktop Environment
   ansible.builtin.set_fact:
     ansible_host_is_desktop_environment: "{{ lookup('env', 'XDG_CURRENT_DESKTOP') }}"
 
-- name: "Obsidian | Install"
+- name: Obsidian | Ubuntu | Install
   community.general.flatpak:
     name: "md.obsidian.Obsidian"
     state: present
