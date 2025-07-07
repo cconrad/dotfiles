@@ -1,6 +1,0 @@
----
-# NVM installs via script from GitHub, which is handled in main.yml
-# No additional packages needed for macOS
-- name: "NVM | MacOSX | No additional packages needed"
-  ansible.builtin.debug:
-    msg: "NVM installs via script, no additional packages needed"
