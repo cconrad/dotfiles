@@ -1,5 +1,5 @@
 ---
-- name: "NerdFetch | MacOSX | Install NerdFetch"
+- name: NerdFetch | macOS | Install
   community.general.homebrew:
     name: nerdfetch
     state: present
