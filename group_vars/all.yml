@@ -36,7 +36,7 @@ default_roles:
   - npm
   - nvm
   - obsidian
-  # - phpstorm
+  - phpstorm
   - podman-desktop
   # - qbittorrent
   # - rclone
