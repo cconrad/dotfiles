@@ -1,5 +1,68 @@
 ---
-- name: "PhpStorm | MacOSX | Install PhpStorm"
-  community.general.homebrew_cask:
-    name: phpstorm
-    state: present
+- name: PhpStorm | macOS | Check installation status
+  ansible.builtin.command:
+    argv:
+      - ls
+      - "/Applications/PhpStorm.app"
+  register: phpstorm_installed
+  changed_when: false
+  failed_when: false
+
+- name: PhpStorm | macOS | Install
+  when: phpstorm_installed.rc != 0
+  block:
+    - name: PhpStorm | macOS | Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        prefix: ansible.phpstorm.
+      register: phpstorm_temp_dir
+
+    - name: PhpStorm | macOS | Download configured version
+      ansible.builtin.get_url:
+        checksum: "{{ phpstorm_.checksum }}"
+        dest: "{{
+            [
+              phpstorm_temp_dir.path,
+              'PhpStorm-' + phpstorm_.version + '-aarch64.dmg'
+            ] | path_join
+          }}"
+        url: "https://download.jetbrains.com/webide/PhpStorm-{{ phpstorm_.version }}-aarch64.dmg"
+        mode: "0400"
+      
+    - name: PhpStorm | macOS | Create mountpoint
+      ansible.builtin.file:
+        mode: "0700"
+        path: "{{
+            [
+              phpstorm_temp_dir.path,
+              'mnt'
+            ] | path_join
+          }}"
+        state: directory
+
+    - name: PhpStorm | macOS | Mount DMG
+      ansible.builtin.command:
+        argv:
+          - hdiutil
+          - attach
+          - -readonly
+          - -mount
+          - required
+          - -mountpoint
+          - "{{ [ phpstorm_temp_dir.path, 'mnt' ] | path_join }}"
+          - -verify
+          - -noautoopen
+          - "{{ [ phpstorm_temp_dir.path, 'PhpStorm-' + phpstorm_.version + '-aarch64.dmg' ] | path_join }}"
+
+    - name: PhpStorm | macOS | Copy to Applications
+      ansible.builtin.copy:
+        dest: "/Applications/"
+        mode: "0755"
+        remote_src: true
+        src: "{{
+            [
+              phpstorm_temp_dir.path,
+              'mnt',
+              'PhpStorm.app'
+            ] | path_join
+          }}"

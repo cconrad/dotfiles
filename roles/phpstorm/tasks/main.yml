@@ -8,37 +8,6 @@
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
 
-- name: PhpStorm | Check installation status
-  ansible.builtin.command:
-    argv:
-      - ls
-      - "{{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}"
-  register: phpstorm_installed
-  changed_when: false
-  failed_when: false
-
-- name: PhpStorm | Install
-  when: phpstorm_installed.rc != 0
-  block:
-    - name: PhpStorm | Create bin directory
-      ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.local/bin"
-        state: directory
-        mode: "755"
-
-    - name: PhpStorm | Download configured version
-      ansible.builtin.unarchive:
-        dest: "{{ ansible_facts.user_dir }}/.local/bin"
-        src: "https://download.jetbrains.com/webide/PhpStorm-{{ phpstorm.version }}.tar.gz"
-        remote_src: true
-
-    - name: PhpStorm | Make executable
-      ansible.builtin.file:
-        path: "{{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm.build }}/bin/phpstorm.sh"
-        mode: "u+x"
-
-    - name: PhpStorm | Create desktop entry
-      ansible.builtin.template:
-        dest: "{{ ansible_facts.user_dir }}/.local/share/applications/jetbrains-phpstorm.desktop"
-        mode: "600"
-        src: jetbrains-phpstorm.desktop.j2
+- name: PhpStorm | Linux | Install
+  ansible.builtin.include_tasks: linux.yml
+  when: ansible_facts.os_family == "Linux"

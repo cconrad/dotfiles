@@ -1,0 +1,35 @@
+---
+- name: PhpStorm | Linux | Check installation status
+  ansible.builtin.command:
+    argv:
+      - ls
+      - "{{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm_.build }}"
+  register: phpstorm_installed
+  changed_when: false
+  failed_when: false
+
+- name: PhpStorm | Linux | Install
+  when: phpstorm_installed.rc != 0
+  block:
+    - name: PhpStorm | Linux | Create bin directory
+      ansible.builtin.file:
+        path: "{{ ansible_facts.user_dir }}/.local/bin"
+        state: directory
+        mode: "0700"
+
+    - name: PhpStorm | Linux | Download configured version
+      ansible.builtin.unarchive:
+        dest: "{{ ansible_facts.user_dir }}/.local/bin"
+        src: "https://download.jetbrains.com/webide/PhpStorm-{{ phpstorm_.version }}.tar.gz"
+        remote_src: true
+
+    - name: PhpStorm | Linux | Make executable
+      ansible.builtin.file:
+        path: "{{ ansible_facts.user_dir }}/.local/bin/PhpStorm-{{ phpstorm_.build }}/bin/phpstorm.sh"
+        mode: "u+x"
+
+    - name: PhpStorm | Linux | Create desktop entry
+      ansible.builtin.template:
+        dest: "{{ ansible_facts.user_dir }}/.local/share/applications/jetbrains-phpstorm.desktop"
+        mode: "0600"
+        src: jetbrains-phpstorm.desktop.j2
