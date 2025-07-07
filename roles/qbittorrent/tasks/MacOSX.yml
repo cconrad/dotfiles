@@ -1,5 +1,5 @@
 ---
-- name: "qBittorrent | MacOSX | Install qBittorrent"
+- name: QBittorrent | macOS | Install
   community.general.homebrew_cask:
     name: qbittorrent
     state: present
