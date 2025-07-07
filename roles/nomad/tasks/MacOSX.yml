@@ -1,5 +1,12 @@
 ---
-- name: "Nomad | MacOSX | Install nomad"
+- name: Nomad | macOS | Enable HashiCorp tap
+  ansible.builtin.command:
+    argv:
+      - brew
+      - tap
+      - hashicorp/tap
+
+- name: Nomad | macOS | Install
   community.general.homebrew:
-    name: nomad
+    name: hashicorp/tap/nomad
     state: present
