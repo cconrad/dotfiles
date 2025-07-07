@@ -5,3 +5,6 @@
       - rofi-wayland
     state: present
   become: true
+
+- name: Rofi | Fedora | Configure
+  ansible.builtin.include_tasks: post-install.yml
