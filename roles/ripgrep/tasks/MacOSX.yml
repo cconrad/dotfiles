@@ -1,5 +1,5 @@
 ---
-- name: "Ripgrep | MacOSX | Install ripgrep"
+- name: Ripgrep | macOS | Install
   community.general.homebrew:
     name: ripgrep
     state: present
