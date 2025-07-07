@@ -1,5 +1,5 @@
 ---
-- name: "Obsidian | MacOSX | Install Obsidian"
+- name: Obsidian | macOS | Install
   community.general.homebrew_cask:
     name: obsidian
     state: present
