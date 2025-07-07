@@ -7,15 +7,3 @@
 - name: "PowerShell | Run Tasks: {{ ansible_facts.distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_facts.distribution }}.yml"
   when: distribution_config.stat.exists
-
-- name: PowerShell | Ensure Powershell profile directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts.user_dir }}/.config/powershell"
-    state: directory
-    mode: "0700"
-
-- name: PowerShell | Deploy Powershell profile
-  ansible.builtin.copy:
-    dest: "{{ ansible_facts.user_dir }}/.config/powershell/profile.ps1"
-    src: "profile.ps1"
-    mode: "0600"
