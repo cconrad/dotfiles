@@ -1,0 +1,39 @@
+---
+- name: Homebrew | Ensure script directory exists
+  ansible.builtin.file:
+    mode: "0700"
+    path: /Users/{{ host_user }}/bin
+    state: directory
+
+- name: Homebrew | Ensure backup directory exists
+  ansible.builtin.file:
+    mode: "0700"
+    path: /Users/{{ host_user }}/OneDrive/Backup/Homebrew
+    state: directory
+
+- name: Homebrew | Create brewexport.plist
+  ansible.builtin.template:
+    dest: /Users/{{ host_user }}/Library/LaunchAgents/com.user.brewexport.plist
+    mode: "0400"
+    owner: "{{ host_user }}"
+    src: com.user.brewexport.plist.j2
+
+- name: Homebrew | Create brew_export.sh script
+  ansible.builtin.template:
+    dest: /Users/{{ host_user }}/bin/brew_export.sh
+    mode: "0700"
+    owner: "{{ host_user }}"
+    src: brew_export.sh.j2
+
+- name: Homebrew | Check whether the brewexport service is loaded
+  ansible.builtin.shell:
+    cmd: launchctl list | grep brewexport
+  register: brewexport_status
+  ignore_errors: true
+  changed_when: false
+
+- name: Homebrew | Schedule Homebrew backup
+  ansible.builtin.command:
+    cmd: launchctl load -w /Users/{{ host_user }}/Library/LaunchAgents/com.user.brewexport.plist
+  when: brewexport_status.rc != 0
+  changed_when: true

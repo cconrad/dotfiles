@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Set the output file path
+OUTPUT_FILE="/Users/{{ host_user }}/OneDrive/Backup/Homebrew/{{ ansible_facts.nodename }}.txt"
+
+# Export installed formulae and casks
+echo "Homebrew Packages Export - $(date)" > "$OUTPUT_FILE"
+echo "========================================" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+echo "FORMULAE:" >> "$OUTPUT_FILE"
+/opt/homebrew/bin/brew list --formula --installed-on-request >> "$OUTPUT_FILE"
+
+echo "" >> "$OUTPUT_FILE"
+echo "CASKS:" >> "$OUTPUT_FILE"
+/opt/homebrew/bin/brew list --cask >> "$OUTPUT_FILE"
